@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getPageBlocks } from '../lib/notion';
+import { renderBlocks } from '../lib/notion-renderer';
+
+const pageId = import.meta.env.NOTION_ABOUT_PAGE_ID;
+
+if (!pageId) {
+  throw new Error('NOTION_ABOUT_PAGE_ID is missing');
+}
+
+const blocks = await getPageBlocks(pageId);
+const html = renderBlocks(blocks);
+---
+
+<BaseLayout
+  title="About — Andrei Shemetau"
+  description="About Andrei Shemetau — Mobile Software Engineer, architect and engineering lead."
+>
+
+  <section class="page-header">
+
+    <p class="eyebrow">
+      ABOUT
+    </p>
+
+    <h1>
+      Engineer.<br />
+      Architect.<br />
+      Team Lead.
+    </h1>
+
+  </section>
+
+
+  <article class="about-content">
+
+    <div
+      class="content"
+      set:html={html}
+    />
+
+  </article>
+
+</BaseLayout>

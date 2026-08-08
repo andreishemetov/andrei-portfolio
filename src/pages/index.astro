@@ -1,17 +1,116 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getFeaturedProjects } from '../lib/projects';
 
+const projects = await getFeaturedProjects();
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout>
+
+  <section class="hero">
+
+    <p class="eyebrow">
+      MOBILE SOFTWARE ENGINEER
+    </p>
+
+    <h1>
+      Building mobile products<br />
+      from architecture<br />
+      to production.
+    </h1>
+
+    <p class="hero-description">
+      Lead Mobile Software Engineer with 13+ years of experience
+      building production applications, designing scalable
+      architectures, and leading engineering teams.
+    </p>
+
+    <div class="hero-actions">
+      <a class="primary-button" href="/projects">
+        Explore my work →
+      </a>
+
+      <a
+  class="secondary-button"
+  href="/cv/andrei-shemetau-cv.pdf"
+  target="_blank"
+>
+  Download CV
+</a>
+
+      <a
+        class="secondary-button"
+        href="https://www.linkedin.com/in/andrei-shemetau"
+        target="_blank"
+      >
+        LinkedIn
+      </a>
+      
+    </div>
+
+  </section>
+
+
+  <section class="stats">
+
+    <div>
+      <strong>13+</strong>
+      <span>Years in mobile engineering</span>
+    </div>
+
+    <div>
+      <strong>Flutter & iOS</strong>
+      <span>Primary platforms</span>
+    </div>
+
+    <div>
+      <strong>Lead</strong>
+      <span>Architecture & engineering</span>
+    </div>
+
+  </section>
+
+
+  <section class="featured">
+
+    <div class="section-heading">
+      <p>SELECTED WORK</p>
+      <h2>Featured Projects</h2>
+    </div>
+
+    <div class="project-grid">
+
+      {projects.map((project) => (
+
+        <a
+          class="project-card"
+          href={`/projects/${project.slug}`}
+        >
+
+          <div class="project-meta">
+            {project.domain}
+          </div>
+
+          <h3>{project.name}</h3>
+
+          <p>{project.role}</p>
+
+          <div class="technology-list">
+            {project.technologies.slice(0, 6).map((technology) => (
+              <span>{technology}</span>
+            ))}
+          </div>
+
+          <div class="project-link">
+            View case study →
+          </div>
+
+        </a>
+
+      ))}
+
+    </div>
+
+  </section>
+
+</BaseLayout>

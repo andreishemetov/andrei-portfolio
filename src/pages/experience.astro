@@ -1,0 +1,72 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getExperience } from '../lib/experience';
+
+const experience = await getExperience();
+
+function formatDate(value: string) {
+  if (!value) return '';
+
+  return new Intl.DateTimeFormat('en', {
+    month: 'short',
+    year: 'numeric',
+  }).format(new Date(value));
+}
+---
+
+<BaseLayout
+  title="Experience — Andrei Shemetau"
+  description="Professional experience of Andrei Shemetau."
+>
+
+  <section class="page-header">
+    <p class="eyebrow">EXPERIENCE</p>
+
+    <h1>
+      Building mobile products<br />
+      since 2012.
+    </h1>
+
+    <p>
+      From native mobile development to Flutter architecture
+      and engineering leadership.
+    </p>
+  </section>
+
+  <section class="timeline">
+
+    {experience.map((item) => (
+
+      <article class="experience-item">
+
+        <div class="experience-period">
+          {formatDate(item.startDate)}
+          {' — '}
+          {item.current
+            ? 'Present'
+            : formatDate(item.endDate)}
+        </div>
+
+        <div class="experience-content">
+
+          <h2>{item.name}</h2>
+
+          <p class="experience-role">
+            {item.role}
+          </p>
+
+          {item.location && (
+            <p class="experience-location">
+              {item.location}
+            </p>
+          )}
+
+        </div>
+
+      </article>
+
+    ))}
+
+  </section>
+
+</BaseLayout>

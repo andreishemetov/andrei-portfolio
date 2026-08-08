@@ -1,0 +1,206 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+}
+
+const {
+  title = 'Andrei Shemetau — Lead Mobile Software Engineer',
+  description = 'Lead Mobile Software Engineer specializing in Flutter, iOS, architecture and engineering leadership.',
+  image = '/og-image.png',
+} = Astro.props;
+
+const canonicalURL = new URL(
+  Astro.url.pathname,
+  Astro.site ?? Astro.url
+);
+---
+
+<!doctype html>
+
+<html lang="en">
+  <head>
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  />
+
+  <title>{title}</title>
+
+  <meta
+    name="description"
+    content={description}
+  />
+
+  <link
+    rel="canonical"
+    href={canonicalURL}
+  />
+
+  <meta
+    property="og:type"
+    content="website"
+  />
+
+  <meta
+    property="og:title"
+    content={title}
+  />
+
+  <meta
+    property="og:description"
+    content={description}
+  />
+
+  <meta
+    property="og:url"
+    content={canonicalURL}
+  />
+
+  <meta
+    property="og:image"
+    content={new URL(image, canonicalURL)}
+  />
+
+  <meta
+    name="twitter:card"
+    content="summary_large_image"
+  />
+
+  <meta
+    name="twitter:title"
+    content={title}
+  />
+
+  <meta
+    name="twitter:description"
+    content={description}
+  />
+
+  <meta
+    name="twitter:image"
+    content={new URL(image, canonicalURL)}
+  />
+
+  <link
+    rel="icon"
+    href="/favicon.svg"
+    type="image/svg+xml"
+  />
+
+  <script is:inline>
+    try {
+      const saved = localStorage.getItem('theme');
+  
+      const theme =
+        saved === 'light' || saved === 'dark'
+          ? saved
+          : window.matchMedia('(prefers-color-scheme: dark)').matches
+            ? 'dark'
+            : 'light';
+  
+      document.documentElement.dataset.theme = theme;
+    } catch {}
+  </script>
+</head>
+
+  <body>
+
+    <header class="header">
+      <nav class="nav">
+
+        <a class="logo" href="/">
+          Andrei Shemetau
+        </a>
+
+        <div class="nav-right">
+    <div class="links">
+      <a href="/about">About</a>
+      <a href="/experience">Experience</a>
+      <a href="/projects">Projects</a>
+      <a href="/blog">Blog</a>
+    </div>
+
+    <button
+      id="theme-toggle"
+      class="theme-toggle"
+      type="button"
+      aria-label="Toggle theme"
+    >
+      ◐
+    </button>
+  </div>
+
+      </nav>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer>
+      <div class="footer-content">
+        <p>© {new Date().getFullYear()} Andrei Shemetau</p>
+    
+        <div class="footer-links">
+          <a href="/cv/andrei-shemetau-cv.pdf" target="_blank">
+            CV
+          </a>
+    
+          <a
+            href="https://www.linkedin.com/in/andrei-shemetau"
+            target="_blank"
+          >
+            LinkedIn
+          </a>
+    
+          <a href="mailto:andrei.shemetov@gmail.com">
+            Email
+          </a>
+        </div>
+      </div>
+    </footer>
+
+    <script is:inline>
+      const getTheme = () => {
+        const saved = localStorage.getItem('theme');
+    
+        if (saved === 'light' || saved === 'dark') {
+          return saved;
+        }
+    
+        return window.matchMedia('(prefers-color-scheme: dark)').matches
+          ? 'dark'
+          : 'light';
+      };
+    
+      const applyTheme = (theme) => {
+        document.documentElement.dataset.theme = theme;
+      };
+    
+      applyTheme(getTheme());
+    
+      document.addEventListener('DOMContentLoaded', () => {
+        const button = document.getElementById('theme-toggle');
+    
+        button?.addEventListener('click', () => {
+          const current =
+            document.documentElement.dataset.theme === 'dark'
+              ? 'dark'
+              : 'light';
+    
+          const next = current === 'dark' ? 'light' : 'dark';
+    
+          localStorage.setItem('theme', next);
+          applyTheme(next);
+        });
+      });
+    </script>
+
+  </body>
+</html>

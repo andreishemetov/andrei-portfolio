@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+import { getProjects } from '../../lib/projects';
+import { getPageBlocks } from '../../lib/notion';
+import { renderBlocks } from '../../lib/notion-renderer';
+
+export async function getStaticPaths() {
+  const projects = await getProjects();
+
+  return projects.map((project) => ({
+    params: {
+      slug: project.slug,
+    },
+
+    props: {
+      project,
+    },
+  }));
+}
+
+const { project } = Astro.props;
+
+const blocks = await getPageBlocks(project.id);
+const html = renderBlocks(blocks);
+---
+
+<BaseLayout
+  title={`${project.name} — Andrei Shemetau`}
+  description={`${project.name} case study by Andrei Shemetau`}
+>
+
+  <article>
+
+    <a href="/projects">
+      ← Projects
+    </a>
+
+    <header>
+      <h1>{project.name}</h1>
+
+      <p>
+        {project.role}
+        {project.domain ? ` · ${project.domain}` : ''}
+      </p>
+
+      <div class="technology-list">
+        {project.technologies.map((technology) => (
+          <span>{technology}</span>
+        ))}
+      </div>
+    </header>
+
+    <div
+      class="content"
+      set:html={html}
+    />
+
+  </article>
+
+</BaseLayout>

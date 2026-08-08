@@ -1,0 +1,90 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getProjects } from '../lib/projects';
+
+const projects = await getProjects();
+---
+
+<BaseLayout
+  title="Projects — Andrei Shemetau"
+  description="Selected mobile engineering projects and case studies."
+>
+
+  <section class="page-header">
+
+    <p class="eyebrow">
+      PROJECTS
+    </p>
+
+    <h1>
+      Selected work<br />
+      & case studies.
+    </h1>
+
+    <p>
+      Mobile products, architecture, engineering
+      leadership, and technical challenges from
+      projects I've worked on.
+    </p>
+
+  </section>
+
+
+  <section class="projects-list">
+
+    {projects.map((project) => (
+
+      <a
+        class="project-row"
+        href={`/projects/${project.slug}`}
+      >
+
+        <div class="project-number">
+          {String(project.order).padStart(2, '0')}
+        </div>
+
+
+        <div class="project-info">
+
+          <div class="project-topline">
+
+            <span class="project-domain">
+              {project.domain}
+            </span>
+
+            {project.featured && (
+              <span class="featured-label">
+                Featured
+              </span>
+            )}
+
+          </div>
+
+          <h2>{project.name}</h2>
+
+          <p>{project.role}</p>
+
+          <div class="technology-list">
+
+            {project.technologies
+              .slice(0, 8)
+              .map((technology) => (
+                <span>{technology}</span>
+              ))}
+
+          </div>
+
+        </div>
+
+
+        <div class="project-arrow">
+          →
+        </div>
+
+      </a>
+
+    ))}
+
+  </section>
+
+</BaseLayout>

@@ -1,0 +1,86 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getArticles } from '../../lib/articles';
+
+const articles = await getArticles();
+
+function formatDate(value: string) {
+  if (!value) return '';
+
+  return new Intl.DateTimeFormat('en', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  }).format(new Date(value));
+}
+---
+
+<BaseLayout
+  title="Blog — Andrei Shemetau"
+  description="Articles about mobile engineering, Flutter, architecture and engineering leadership."
+>
+
+  <section class="page-header">
+
+    <p class="eyebrow">BLOG</p>
+
+    <h1>
+      Notes on building<br />
+      software.
+    </h1>
+
+    <p>
+      Mobile engineering, Flutter, architecture,
+      developer experience, leadership and AI-assisted
+      software development.
+    </p>
+
+  </section>
+
+
+  <section class="articles-list">
+
+    {articles.map((article) => {
+
+      const href =
+        article.externalUrl ||
+        `/blog/${article.slug}`;
+
+      return (
+        <a
+          class="article-row"
+          href={href}
+          target={article.externalUrl ? '_blank' : undefined}
+        >
+
+          <div class="article-date">
+            {formatDate(article.publishedDate)}
+          </div>
+
+          <div class="article-info">
+
+            <div class="article-tags">
+              {article.tags.map((tag) => (
+                <span>{tag}</span>
+              ))}
+            </div>
+
+            <h2>{article.name}</h2>
+
+            {article.description && (
+              <p>{article.description}</p>
+            )}
+
+          </div>
+
+          <div class="project-arrow">
+            →
+          </div>
+
+        </a>
+      );
+    })}
+
+  </section>
+
+</BaseLayout>

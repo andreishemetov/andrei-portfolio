@@ -1,0 +1,82 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+import { getArticles } from '../../lib/articles';
+import { getPageBlocks } from '../../lib/notion';
+import { renderBlocks } from '../../lib/notion-renderer';
+
+export async function getStaticPaths() {
+  const articles = await getArticles();
+
+  return articles
+    .filter((article) => !article.externalUrl)
+    .map((article) => ({
+      params: {
+        slug: article.slug,
+      },
+
+      props: {
+        article,
+      },
+    }));
+}
+
+const { article } = Astro.props;
+
+const blocks = await getPageBlocks(article.id);
+const html = renderBlocks(blocks);
+
+function formatDate(value: string) {
+  if (!value) return '';
+
+  return new Intl.DateTimeFormat('en', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  }).format(new Date(value));
+}
+---
+
+<BaseLayout
+  title={`${article.name} — Andrei Shemetau`}
+  description={article.description}
+>
+
+  <article>
+
+    <a href="/blog">
+      ← Blog
+    </a>
+
+    <header>
+
+      <div class="article-tags">
+        {article.tags.map((tag) => (
+          <span>{tag}</span>
+        ))}
+      </div>
+
+      <h1>{article.name}</h1>
+
+      {article.publishedDate && (
+        <p>
+          {formatDate(article.publishedDate)}
+        </p>
+      )}
+
+      {article.description && (
+        <p>
+          {article.description}
+        </p>
+      )}
+
+    </header>
+
+    <div
+      class="content"
+      set:html={html}
+    />
+
+  </article>
+
+</BaseLayout>
