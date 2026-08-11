@@ -35,8 +35,17 @@ All commands are run from the root of the project, from a terminal:
 | `npm run dev`             | Starts local dev server at `localhost:4321`      |
 | `npm run build`           | Build your production site to `./dist/`          |
 | `npm run preview`         | Preview your build locally, before deploying     |
+| `npm run deploy-content`  | Sync content from Notion and trigger a deploy    |
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `npm run astro -- --help` | Get help using the Astro CLI                     |
+
+## Content (Notion)
+
+Теперь после изменений в Notion тебе достаточно выполнить:
+
+```sh
+npm run deploy-content
+```
 
 ## 👀 Want to learn more?
 
