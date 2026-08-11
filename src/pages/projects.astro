@@ -3,6 +3,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { getProjects } from '../lib/projects';
 
 const projects = await getProjects();
+
+const featuredProjects = projects.filter(
+  (project) => project.featured
+);
+
+const otherProjects = projects.filter(
+  (project) => !project.featured
+);
 ---
 
 <BaseLayout
@@ -29,62 +37,113 @@ const projects = await getProjects();
 
   </section>
 
+  <section class="projects-section">
 
-  <section class="projects-list">
-
-    {projects.map((project) => (
-
-      <a
-        class="project-row"
-        href={`/projects/${project.slug}`}
-      >
-
-        <div class="project-number">
-          {String(project.order).padStart(2, '0')}
-        </div>
-
-
-        <div class="project-info">
-
-          <div class="project-topline">
-
+    <div class="section-heading">
+      <p>SELECTED CASE STUDIES</p>
+      <h2>Featured Projects</h2>
+    </div>
+  
+    <div class="case-study-grid">
+  
+      {featuredProjects.map((project) => (
+  
+        <a
+          class="case-study-card"
+          href={`/projects/${project.slug}`}
+        >
+  
+          <div class="case-study-top">
+            <span>
+              {String(project.order).padStart(2, '0')}
+            </span>
+  
+            <span>
+              {project.domain}
+            </span>
+          </div>
+  
+          <div class="case-study-content">
+  
+            <h3>{project.name}</h3>
+  
+            <p>{project.role}</p>
+  
+            <div class="technology-list">
+              {project.technologies
+                .slice(0, 7)
+                .map((technology) => (
+                  <span>{technology}</span>
+                ))}
+            </div>
+  
+          </div>
+  
+          <div class="case-study-link">
+            View case study →
+          </div>
+  
+        </a>
+  
+      ))}
+  
+    </div>
+  
+  </section>
+  
+  
+  <section class="other-projects">
+  
+    <div class="section-heading">
+      <p>OTHER WORK</p>
+      <h2>More Projects</h2>
+    </div>
+  
+    <div class="projects-list">
+  
+      {otherProjects.map((project) => (
+  
+        <a
+          class="project-row"
+          href={`/projects/${project.slug}`}
+        >
+  
+          <div class="project-number">
+            {String(project.order).padStart(2, '0')}
+          </div>
+  
+          <div class="project-info">
+  
             <span class="project-domain">
               {project.domain}
             </span>
-
-            {project.featured && (
-              <span class="featured-label">
-                Featured
-              </span>
-            )}
-
+  
+            <h2>{project.name}</h2>
+  
+            <p>{project.role}</p>
+  
+            <div class="technology-list">
+  
+              {project.technologies
+                .slice(0, 5)
+                .map((technology) => (
+                  <span>{technology}</span>
+                ))}
+  
+            </div>
+  
           </div>
-
-          <h2>{project.name}</h2>
-
-          <p>{project.role}</p>
-
-          <div class="technology-list">
-
-            {project.technologies
-              .slice(0, 8)
-              .map((technology) => (
-                <span>{technology}</span>
-              ))}
-
+  
+          <div class="project-arrow">
+            →
           </div>
-
-        </div>
-
-
-        <div class="project-arrow">
-          →
-        </div>
-
-      </a>
-
-    ))}
-
-  </section>
+  
+        </a>
+  
+      ))}
+  
+    </div>
+  
+  </section>  
 
 </BaseLayout>
