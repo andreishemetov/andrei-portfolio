@@ -51,6 +51,16 @@ const html = renderBlocks(blocks);
       </div>
     </header>
 
+    {project.cover && (
+      <div class="project-cover">
+        <img
+          src={project.cover}
+          alt={`${project.name} project`}
+          loading="eager"
+        />
+      </div>
+    )}
+
     <div
       class="content"
       set:html={html}

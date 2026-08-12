@@ -822,3 +822,19 @@ footer {
     padding-bottom: 80px;
   }
 }
+
+.project-cover {
+  margin: 0 0 72px;
+}
+
+.project-cover img {
+  display: block;
+
+  width: 100%;
+  height: auto;
+
+  border-radius: 16px;
+  border: 1px solid var(--border);
+
+  object-fit: cover;
+}
