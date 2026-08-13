@@ -45,10 +45,8 @@ export async function getProjects(): Promise<Project[]> {
           props.Technologies?.multi_select?.map(
             (item: any) => item.name
           ) ?? [],
-        cover:
-          props.Cover?.files?.[0]?.file?.url ??
-          props.Cover?.files?.[0]?.external?.url ??
-          '',
+          cover:
+          props['Cover Path']?.rich_text?.[0]?.plain_text ?? '',
       };
     })
     .sort((a, b) => a.order - b.order);
