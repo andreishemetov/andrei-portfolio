@@ -46,7 +46,7 @@ export async function getProjects(): Promise<Project[]> {
             (item: any) => item.name
           ) ?? [],
           cover:
-          props['Cover Path']?.rich_text?.[0]?.plain_text ?? '',
+          props['Cover Image']?.rich_text?.[0]?.plain_text ?? '',
       };
     })
     .sort((a, b) => a.order - b.order);
