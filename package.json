@@ -13,10 +13,10 @@
     "deploy-content": "node --env-file=.env scripts/deploy-content.mjs"
   },
   "dependencies": {
-    "@astrojs/vercel": "^11.0.5",
-    "@notionhq/client": "^5.24.0",
-    "astro": "^7.2.0",
-    "shiki": "^4.4.2"
+    "@astrojs/vercel": "^11.0.7",
+    "@notionhq/client": "^5.26.0",
+    "astro": "^7.2.4",
+    "shiki": "^4.4.3"
   },
   "devDependencies": {
     "prettier": "^3.9.6",
