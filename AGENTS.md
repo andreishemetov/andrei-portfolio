@@ -1,3 +1,17 @@
+# Portfolio
+
+## Architecture
+
+```text
+Portfolio
+├── Astro 7
+├── TypeScript
+├── Notion → source of content
+├── Astro → site/application
+├── Vercel → hosting/deployment
+└── GitHub → source of truth for code
+```
+
 ## Development
 
 When starting the dev server, use background mode:
