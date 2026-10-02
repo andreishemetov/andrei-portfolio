@@ -1,0 +1,49 @@
+name: Publish content
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: Type "publish" to deploy Notion content
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-content
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Publish Notion content
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Confirm production deployment
+        env:
+          CONFIRM: ${{ inputs.confirm }}
+        run: |
+          if [ "$CONFIRM" != "publish" ]; then
+            echo 'Confirmation must be exactly: publish'
+            exit 1
+          fi
+
+      - name: Trigger Vercel deployment
+        env:
+          VERCEL_DEPLOY_HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$VERCEL_DEPLOY_HOOK" ]; then
+            echo "VERCEL_DEPLOY_HOOK is not configured"
+            exit 1
+          fi
+
+          curl \
+            --fail \
+            --silent \
+            --show-error \
+            --request POST \
+            "$VERCEL_DEPLOY_HOOK"
+
+          echo "Vercel deployment requested successfully"
