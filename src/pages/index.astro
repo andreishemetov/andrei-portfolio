@@ -1,8 +1,20 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getFeaturedProjects } from '../lib/projects';
+import { getProfileItems } from '../lib/profile';
 
 const projects = await getFeaturedProjects();
+const profileItems = await getProfileItems();
+
+const hero = profileItems.find(
+  (item) => item.section === 'Hero'
+);
+
+const heroBlocks = hero?.blocks.filter(
+  (block) => block.text.trim().length > 0
+) ?? [];
+
+console.log('HERO:', hero);
 ---
 
 <BaseLayout>
@@ -10,34 +22,34 @@ const projects = await getFeaturedProjects();
   <section class="hero">
 
     <p class="eyebrow">
-      MOBILE SOFTWARE ENGINEER
+      {heroBlocks[0]?.text}
     </p>
-
+  
     <h1>
-      Building mobile products<br />
-      from architecture<br />
-      to production.
+      {heroBlocks[1]?.text}
     </h1>
-
+  
     <p class="hero-description">
-      Lead Mobile Software Engineer with 13+ years of experience
-      building production applications, designing scalable
-      architectures, and leading engineering teams.
+      {heroBlocks[2]?.text}
     </p>
-
+  
+    <p class="hero-description">
+      {heroBlocks[3]?.text}
+    </p>
+  
     <div class="hero-actions">
       <a class="primary-button" href="/projects">
         Explore my work →
       </a>
-
+  
       <a
-  class="secondary-button"
-  href="/cv/andrei-shemetau-cv.pdf"
-  target="_blank"
->
-  Download CV
-</a>
-
+        class="secondary-button"
+        href="/cv/andrei-shemetau-cv.pdf"
+        target="_blank"
+      >
+        Download CV
+      </a>
+  
       <a
         class="secondary-button"
         href="https://www.linkedin.com/in/andrei-shemetau"
@@ -45,9 +57,8 @@ const projects = await getFeaturedProjects();
       >
         LinkedIn
       </a>
-      
     </div>
-
+  
   </section>
 
 
