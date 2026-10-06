@@ -1,0 +1,103 @@
+---
+import type { ProfileBlock } from '../lib/profile';
+
+interface Props {
+  blocks: ProfileBlock[];
+}
+
+const { blocks } = Astro.props;
+
+const title = blocks.find(
+  (block) => block.type === 'heading_2'
+)?.text ?? '';
+
+const intro = blocks.find(
+  (block) => block.type === 'paragraph'
+)?.text ?? '';
+
+const items = blocks
+  .map((block, index) => {
+    if (block.type !== 'heading_3') {
+      return null;
+    }
+
+    const description = blocks
+      .slice(index + 1)
+      .find((item) => item.type === 'paragraph');
+
+    return {
+      title: block.text,
+      description: description?.text ?? '',
+    };
+  })
+  .filter(Boolean);
+---
+
+<section class="what-i-do">
+  <header class="what-i-do-header">
+    <h2>{title}</h2>
+    <p>{intro}</p>
+  </header>
+
+  <div class="what-i-do-grid">
+    {items.map((item) => (
+      <article class="what-i-do-item">
+        <h3>{item?.title}</h3>
+        <p>{item?.description}</p>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+    .what-i-do {
+      margin-top: 7rem;
+    }
+  
+    .what-i-do-header {
+      max-width: 720px;
+      margin-bottom: 3rem;
+    }
+  
+    .what-i-do-header h2 {
+      margin: 0 0 1rem;
+      font-size: clamp(2rem, 5vw, 3rem);
+      line-height: 1.1;
+    }
+  
+    .what-i-do-header p {
+      margin: 0;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      opacity: 0.75;
+    }
+  
+    .what-i-do-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+  
+    .what-i-do-item {
+      border-top: 1px solid rgba(255, 255, 255, 0.18);
+      padding-top: 1.5rem;
+    }
+  
+    .what-i-do-item h3 {
+      margin: 0 0 1rem;
+      font-size: 1.35rem;
+    }
+  
+    .what-i-do-item p {
+      margin: 0;
+      line-height: 1.7;
+      opacity: 0.75;
+    }
+  
+    @media (min-width: 768px) {
+      .what-i-do-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 3rem;
+      }
+    }
+  </style>

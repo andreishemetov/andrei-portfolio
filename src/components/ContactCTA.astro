@@ -1,0 +1,83 @@
+---
+import type { ProfileBlock } from '../lib/profile';
+
+interface Props {
+  blocks: ProfileBlock[];
+}
+
+const { blocks } = Astro.props;
+
+const title = blocks.find(
+  (block) => block.type === 'heading_2'
+)?.text ?? '';
+
+const description = blocks.find(
+  (block) => block.type === 'paragraph'
+)?.text ?? '';
+---
+
+<section class="contact-cta">
+  <div class="contact-content">
+    <h2>{title}</h2>
+    <p>{description}</p>
+  </div>
+
+  <div class="contact-actions">
+    <a
+      class="primary-button"
+      href="https://www.linkedin.com/in/andrei-shemetau"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      LinkedIn
+    </a>
+
+    <a
+      class="secondary-button"
+      href="mailto:YOUR_EMAIL"
+    >
+      Email
+    </a>
+
+    <a
+      class="secondary-button"
+      href="YOUR_GITHUB_URL"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      GitHub
+    </a>
+  </div>
+</section>
+
+<style>
+  .contact-cta {
+    margin-top: 8rem;
+    padding: 4rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
+  .contact-content {
+    max-width: 760px;
+    margin-bottom: 2.5rem;
+  }
+
+  .contact-content h2 {
+    margin: 0 0 1rem;
+    font-size: clamp(2.5rem, 7vw, 4.5rem);
+    line-height: 1;
+  }
+
+  .contact-content p {
+    margin: 0;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    opacity: 0.75;
+  }
+
+  .contact-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+</style>

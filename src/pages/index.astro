@@ -3,6 +3,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { getFeaturedProjects } from '../lib/projects';
 import { getProfileItems } from '../lib/profile';
 import NotionContent from '../components/NotionContent.astro';
+import WhatIDo from '../components/WhatIDo.astro';
+import Principles from '../components/Principles.astro';
+import EngineeringStories from '../components/EngineeringStories.astro';
+import Experience from '../components/Experience.astro';
+import About from '../components/About.astro';
+import ContactCTA from '../components/ContactCTA.astro';
 
 const projects = await getFeaturedProjects();
 const profileItems = await getProfileItems();
@@ -145,89 +151,30 @@ const ctaBlocks = cta?.blocks.filter(
 
   <!---------------------------------- WHAT I DO ----------------------------------->
   {whatIDo && (
-    <section class="profile-section">
-      <NotionContent blocks={whatIDoBlocks} />
-    </section>
+    <WhatIDo blocks={whatIDoBlocks} />
   )}
 
   <!---------------------------------- PRINCIPLES ----------------------------------->
   {principles && (
-    <section class="profile-section">
-      <NotionContent blocks={principlesBlocks} />
-    </section>
+    <Principles blocks={principlesBlocks} />
   )}
 
   <!---------------------------------- STORIES ----------------------------------->
-  <section class="stories">
-
-    <div class="section-heading">
-      <p>ENGINEERING STORIES</p>
-      <h2>Problems I've worked through</h2>
-    </div>
-  
-    <div class="story-grid">
-      {storyCards.map((story) => (
-        <article class="story-card">
-          <h3>{story.title}</h3>
-    
-          <p>{story.description}</p>
-    
-          <a
-            class="story-link"
-            href={`/stories/${story.slug}`}
-          >
-            Read story →
-          </a>
-        </article>
-      ))}
-    </div>
-  
-  </section>
+  <EngineeringStories stories={storyCards} />
 
   <!---------------------------------- EXPERIENCE ----------------------------------->
   {experience && (
-    <section class="profile-section experience">
-      <NotionContent blocks={experienceBlocks} />
-    </section>
+    <Experience blocks={experienceBlocks} />
   )}
 
   <!---------------------------------- ABOUT ----------------------------------->
   {about && (
-    <section class="profile-section about">
-      <NotionContent blocks={aboutBlocks} />
-    </section>
+    <About blocks={aboutBlocks} />
   )}
   
   <!---------------------------------- CTA ----------------------------------->
   {cta && (
-    <section class="profile-section cta">
-      <NotionContent blocks={ctaBlocks} />
-  
-      <div class="hero-actions">
-        <a
-          class="primary-button"
-          href="https://www.linkedin.com/in/andrei-shemetau"
-          target="_blank"
-        >
-          LinkedIn
-        </a>
-  
-        <a
-          class="secondary-button"
-          href="mailto:andrei.shemetov@gmail.com"
-        >
-          Email
-        </a>
-  
-        <a
-          class="secondary-button"
-          href="https://github.com/andreishemetov"
-          target="_blank"
-        >
-          GitHub
-        </a>
-      </div>
-    </section>
+    <ContactCTA blocks={ctaBlocks} />
   )}
 
   <!---------------------------------- FEATURED ----------------------------------->
