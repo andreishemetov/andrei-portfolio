@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import NotionContent from '../../components/NotionContent.astro';
+import { getProfileItems } from '../../lib/profile';
+
+export async function getStaticPaths() {
+  const profileItems = await getProfileItems();
+
+  const stories = profileItems.filter(
+    (item) => item.section === 'Stories' && item.slug
+  );
+
+  return stories.map((story) => ({
+    params: {
+      slug: story.slug,
+    },
+    props: {
+      story,
+    },
+  }));
+}
+
+const { story } = Astro.props;
+
+const blocks = story.blocks.filter(
+  (block) =>
+    block.text.trim().length > 0 &&
+    !(block.type === 'heading_2' && block.text === story.name)
+);
+---
+
+<BaseLayout>
+  <article class="story">
+
+    <a href="/" class="story-back">
+      ← Back
+    </a>
+
+    <header class="story-header">
+      <p class="eyebrow">
+        ENGINEERING STORY
+      </p>
+
+      <h1>{story.name}</h1>
+    </header>
+
+    <NotionContent blocks={blocks} />
+
+  </article>
+</BaseLayout>

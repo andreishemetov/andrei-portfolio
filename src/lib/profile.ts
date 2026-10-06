@@ -17,6 +17,7 @@ export interface ProfileItem {
   order: number;
   enabled: boolean;
   blocks: ProfileBlock[];
+  slug: string;
 }
 
 export interface ProfileBlock {
@@ -81,6 +82,7 @@ const items = await Promise.all(
     return {
       id: page.id,
       name: props.Name?.title?.[0]?.plain_text ?? '',
+      slug: props.Slug?.rich_text?.[0]?.plain_text ?? '',
       section: props.Section?.select?.name ?? '',
       order: props.Order?.number ?? 999,
       enabled: props.Enabled?.checkbox ?? false,
