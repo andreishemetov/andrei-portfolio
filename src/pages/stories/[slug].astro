@@ -27,9 +27,37 @@ const blocks = story.blocks.filter(
     block.text.trim().length > 0 &&
     !(block.type === 'heading_2' && block.text === story.name)
 );
+
+const description =
+  story.blocks.find(
+    (block) =>
+      block.type === 'paragraph' &&
+      block.text.trim().length > 0
+  )?.text ?? story.name;
+
+const articleJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: story.name,
+  description,
+  url: new URL(`/stories/${story.slug}`, Astro.site).href,
+  author: {
+    '@type': 'Person',
+    name: 'Andrei Shemetau',
+    url: new URL('/', Astro.site).href,
+  },
+};
 ---
 
-<BaseLayout>
+<BaseLayout
+  title={`${story.name} — Andrei Shemetau`}
+  type="article"
+  description={description}
+>
+  <script
+  type="application/ld+json"
+  set:html={JSON.stringify(articleJsonLd)}
+/>
   <article class="story">
 
     <a href="/" class="story-back">

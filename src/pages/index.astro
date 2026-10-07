@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getFeaturedProjects } from '../lib/projects';
 import { getProfileItems } from '../lib/profile';
 import NotionContent from '../components/NotionContent.astro';
 import WhatIDo from '../components/WhatIDo.astro';
@@ -10,7 +9,6 @@ import Experience from '../components/Experience.astro';
 import About from '../components/About.astro';
 import ContactCTA from '../components/ContactCTA.astro';
 
-const projects = await getFeaturedProjects();
 const profileItems = await getProfileItems();
 
 const hero = profileItems.find(
@@ -81,9 +79,34 @@ const ctaBlocks = cta?.blocks.filter(
   (block) => block.text.trim().length > 0
 ) ?? [];
 
+const profileJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  mainEntity: {
+    '@type': 'Person',
+    name: 'Andrei Shemetau',
+    url: new URL('/', Astro.site).href,
+    jobTitle: 'Mobile Team Lead & Software Engineer',
+    sameAs: [
+      'https://www.linkedin.com/in/andrei-shemetau',
+    ],
+    knowsAbout: [
+      'Mobile Software Engineering',
+      'Flutter',
+      'iOS Development',
+      'Mobile Architecture',
+      'Engineering Leadership',
+    ],
+  },
+};
+
 ---
 
 <BaseLayout>
+  <script
+  type="application/ld+json"
+  set:html={JSON.stringify(profileJsonLd)}
+/>
 
   <!---------------------------------- HERO ----------------------------------->
   <section class="hero">
@@ -176,48 +199,5 @@ const ctaBlocks = cta?.blocks.filter(
   {cta && (
     <ContactCTA blocks={ctaBlocks} />
   )}
-
-  <!---------------------------------- FEATURED ----------------------------------->
-  <!-- <section class="featured">
-
-    <div class="section-heading">
-      <p>SELECTED WORK</p>
-      <h2>Featured Projects</h2>
-    </div>
-
-    <div class="project-grid">
-
-      {projects.map((project) => (
-
-        <a
-          class="project-card"
-          href={`/projects/${project.slug}`}
-        >
-
-          <div class="project-meta">
-            {project.domain}
-          </div>
-
-          <h3>{project.name}</h3>
-
-          <p>{project.role}</p>
-
-          <div class="technology-list">
-            {project.technologies.slice(0, 6).map((technology) => (
-              <span>{technology}</span>
-            ))}
-          </div>
-
-          <div class="project-link">
-            View case study →
-          </div>
-
-        </a>
-
-      ))}
-
-    </div>
-
-  </section> -->
 
 </BaseLayout>

@@ -5,12 +5,14 @@ interface Props {
   title?: string;
   description?: string;
   image?: string;
+  type?: 'website' | 'article';
 }
 
 const {
-  title = 'Andrei Shemetau — Lead Mobile Software Engineer',
-  description = 'Lead Mobile Software Engineer specializing in Flutter, iOS, architecture and engineering leadership.',
+  title = 'Andrei Shemetau — Mobile Team Lead & Software Engineer',
+  description = 'Hands-on Mobile Team Lead and Software Engineer with 13+ years of experience in Flutter, iOS, mobile architecture and engineering leadership.',
   image = '/og-image.png',
+  type = 'website'
 } = Astro.props;
 
 const canonicalURL = new URL(
@@ -44,7 +46,7 @@ const canonicalURL = new URL(
 
   <meta
     property="og:type"
-    content="website"
+    content={type}
   />
 
   <meta
