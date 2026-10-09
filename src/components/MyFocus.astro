@@ -7,14 +7,6 @@ interface Props {
 
 const { blocks } = Astro.props;
 
-const title = blocks.find(
-  (block) => block.type === 'heading_2'
-)?.text ?? '';
-
-const intro = blocks.find(
-  (block) => block.type === 'paragraph'
-)?.text ?? '';
-
 const items = blocks
   .map((block, index) => {
     if (block.type !== 'heading_3') {
@@ -33,11 +25,7 @@ const items = blocks
   .filter(Boolean);
 ---
 
-<section class="what-i-do">
-  <header class="what-i-do-header">
-    <h2>{title}</h2>
-    <p>{intro}</p>
-  </header>
+<section class="what-i-do">  
 
   <div class="what-i-do-grid">
     {items.map((item) => (
@@ -79,8 +67,8 @@ const items = blocks
     }
   
     .what-i-do-item {
-      border-top: 1px solid rgba(255, 255, 255, 0.18);
-      padding-top: 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+      padding-bottom: 1.5rem;
     }
   
     .what-i-do-item h3 {

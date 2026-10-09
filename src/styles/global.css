@@ -86,7 +86,7 @@ a:hover {
 main {
   max-width: var(--content-width);
   margin: 0 auto;
-  padding: 72px 24px;
+  padding: 36px 24px 72px;
 }
 
 /* Article */
@@ -199,7 +199,7 @@ footer {
 
 .hero {
   max-width: 900px;
-  padding: 72px 0 96px;
+  padding: 36px 0 40px;
 }
 
 .eyebrow {

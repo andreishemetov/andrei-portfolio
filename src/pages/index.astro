@@ -1,12 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getProfileItems } from '../lib/profile';
-import NotionContent from '../components/NotionContent.astro';
-import WhatIDo from '../components/WhatIDo.astro';
-import Principles from '../components/Principles.astro';
-import EngineeringStories from '../components/EngineeringStories.astro';
-import Experience from '../components/Experience.astro';
-import About from '../components/About.astro';
+import MyFocus from '../components/MyFocus.astro';
 import ContactCTA from '../components/ContactCTA.astro';
 
 const profileItems = await getProfileItems();
@@ -19,55 +14,11 @@ const heroBlocks = hero?.blocks.filter(
   (block) => block.text.trim().length > 0
 ) ?? [];
 
-const whatIDo = profileItems.find(
-  (item) => item.section === 'What I Do'
+const myFocus = profileItems.find(
+  (item) => item.section === 'MyFocus'
 );
 
-const whatIDoBlocks = whatIDo?.blocks.filter(
-  (block) => block.text.trim().length > 0
-) ?? [];
-
-const principles = profileItems.find(
-  (item) => item.section === 'Principles'
-);
-
-const principlesBlocks = principles?.blocks.filter(
-  (block) => block.text.trim().length > 0
-) ?? [];
-
-const stories = profileItems.filter(
-  (item) => item.section === 'Stories'
-);
-
-const storyCards = stories.map((story) => {
-  const paragraphs = story.blocks.filter(
-    (block) =>
-      block.type === 'paragraph' &&
-      block.text.trim().length > 0 &&
-      block.text !== 'Starting point'
-  );
-
-  return {
-    id: story.id,
-    title: story.name,
-    slug: story.slug,
-    description: paragraphs[0]?.text ?? '',
-  };
-});
-
-const experience = profileItems.find(
-  (item) => item.section === 'Experience'
-);
-
-const experienceBlocks = experience?.blocks.filter(
-  (block) => block.text.trim().length > 0
-) ?? [];
-
-const about = profileItems.find(
-  (item) => item.section === 'About'
-);
-
-const aboutBlocks = about?.blocks.filter(
+const myFocusBlocks = myFocus?.blocks.filter(
   (block) => block.text.trim().length > 0
 ) ?? [];
 
@@ -109,46 +60,18 @@ const profileJsonLd = {
 />
 
   <!---------------------------------- HERO ----------------------------------->
-  <section class="hero">
-    <p class="eyebrow">
-      {heroBlocks[0]?.text}
-    </p>
-  
+  <section class="hero">  
     <h1>
-      {heroBlocks[1]?.text}
+      {heroBlocks[0]?.text}
     </h1>
+  
+    <p class="hero-description">
+      {heroBlocks[1]?.text}
+    </p>
   
     <p class="hero-description">
       {heroBlocks[2]?.text}
     </p>
-  
-    <p class="hero-description">
-      {heroBlocks[3]?.text}
-    </p>
-  
-    <div class="hero-actions">
-      <a class="primary-button" href="/projects">
-        Explore my work →
-      </a>
-  
-      <!--
-      <a
-        class="secondary-button"
-        href="/cv/andrei-shemetau-cv.pdf"
-        target="_blank"
-      >
-        Download CV
-      </a>
-      -->
-  
-      <a
-        class="secondary-button"
-        href="https://www.linkedin.com/in/andrei-shemetau"
-        target="_blank"
-      >
-        LinkedIn
-      </a>
-    </div>
   
   </section>
 
@@ -156,7 +79,7 @@ const profileJsonLd = {
   <section class="stats">
 
     <div>
-      <strong>13+</strong>
+      <strong>14+</strong>
       <span>Years in mobile engineering</span>
     </div>
 
@@ -172,27 +95,9 @@ const profileJsonLd = {
 
   </section>
 
-  <!---------------------------------- WHAT I DO ----------------------------------->
-  {whatIDo && (
-    <WhatIDo blocks={whatIDoBlocks} />
-  )}
-
-  <!---------------------------------- PRINCIPLES ----------------------------------->
-  {principles && (
-    <Principles blocks={principlesBlocks} />
-  )}
-
-  <!---------------------------------- STORIES ----------------------------------->
-  <EngineeringStories stories={storyCards} />
-
-  <!---------------------------------- EXPERIENCE ----------------------------------->
-  {experience && (
-    <Experience blocks={experienceBlocks} />
-  )}
-
-  <!---------------------------------- ABOUT ----------------------------------->
-  {about && (
-    <About blocks={aboutBlocks} />
+  <!---------------------------------- MY FOCUS ----------------------------------->
+  {myFocus && (
+    <MyFocus blocks={myFocusBlocks} />
   )}
   
   <!---------------------------------- CTA ----------------------------------->

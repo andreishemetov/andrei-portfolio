@@ -2,12 +2,7 @@ import { notion } from './notion';
 
 export type ProfileSection =
   | 'Hero'
-  | 'What I Do'
-  | 'Principles'
-  | 'Stories'
-  | 'Experience'
-  | 'Writing'
-  | 'About'
+  | 'MyFocus'
   | 'CTA';
 
 export interface ProfileItem {
