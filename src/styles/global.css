@@ -909,3 +909,17 @@ footer {
   align-items: center;
   gap: 12px;
 }
+
+/* About page */
+
+.about-content .content h2 {
+  margin-top: 40px;
+}
+
+.about-content .content h2:first-child {
+  margin-top: 0;
+}
+
+.page-header:has(+ .about-content) {
+  padding-bottom: 40px;
+}
