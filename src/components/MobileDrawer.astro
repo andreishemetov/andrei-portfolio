@@ -1,0 +1,191 @@
+<button
+  id="drawer-open"
+  class="drawer-trigger"
+  type="button"
+  aria-label="Open navigation menu"
+  aria-haspopup="dialog"
+  aria-controls="mobile-drawer"
+>
+  <span aria-hidden="true">☰</span>
+</button>
+
+<dialog
+  id="mobile-drawer"
+  class="mobile-drawer"
+  aria-label="Mobile navigation"
+>
+  <div class="drawer-content">
+    <div class="drawer-header">
+      <a href="/" class="drawer-logo">Andrei Shemetau</a>
+
+      <button
+        id="drawer-close"
+        class="drawer-close"
+        type="button"
+        aria-label="Close navigation menu"
+      >
+        ✕
+      </button>
+    </div>
+
+    <nav class="drawer-links" aria-label="Mobile navigation links">
+      <a href="/">Home</a>
+      <a href="/about">About</a>
+      <a href="/experience">Experience</a>
+      <a href="/projects">Projects</a>
+      <a href="/blog">Blog</a>
+    </nav>
+
+    <div class="drawer-footer">
+      <a
+        href="https://www.linkedin.com/in/andrei-shemetau"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        LinkedIn
+      </a>
+
+      <a
+        href="https://github.com/andreishemetov"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        GitHub
+      </a>
+    </div>
+  </div>
+</dialog>
+
+<style>
+  .drawer-trigger {
+    display: none;
+    width: 36px;
+    height: 36px;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  .mobile-drawer {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: min(300px, 85vw);
+    max-width: none;
+    height: 100dvh;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: var(--background);
+    color: var(--text);
+    transform: translateX(-100%);
+    transition: transform 200ms ease;
+  }
+
+  .mobile-drawer[open] {
+    transform: translateX(0);
+  }
+
+  .mobile-drawer::backdrop {
+    background: rgba(0, 0, 0, 0.6);
+  }
+
+  .drawer-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 24px;
+  }
+
+  .drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .drawer-logo {
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .drawer-close {
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+  }
+
+  .drawer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 48px;
+  }
+
+  .drawer-links a {
+    padding: 12px 0;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .drawer-footer {
+    display: flex;
+    gap: 20px;
+    margin-top: auto;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+
+  @media (max-width: 700px) {
+    .drawer-trigger {
+      display: inline-flex;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mobile-drawer {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const drawer = document.querySelector<HTMLDialogElement>('#mobile-drawer');
+  const openButton = document.querySelector<HTMLButtonElement>('#drawer-open');
+  const closeButton = document.querySelector<HTMLButtonElement>('#drawer-close');
+
+  if (drawer && openButton && closeButton) {
+    const desktopMedia = window.matchMedia('(min-width: 701px)');
+
+desktopMedia.addEventListener('change', (event) => {
+  if (event.matches && drawer.open) {
+    drawer.close();
+  }
+});
+    openButton.addEventListener('click', () => {
+      drawer.showModal();
+    });
+
+    closeButton.addEventListener('click', () => {
+      drawer.close();
+    });
+
+    drawer.addEventListener('click', (event) => {
+      if (event.target === drawer) {
+        drawer.close();
+      }
+    });
+  }
+</script>

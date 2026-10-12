@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import MobileDrawer from '../components/MobileDrawer.astro';
 
 interface Props {
   title?: string;
@@ -114,13 +115,16 @@ const canonicalURL = new URL(
   <body>
 
     <header class="header">
-      <nav class="nav">
+<nav class="nav" aria-label="Main navigation">
+  <div class="nav-left">
+    <MobileDrawer />
 
-        <a class="logo" href="/">
-          Andrei Shemetau
-        </a>
+    <a class="logo" href="/">
+      Andrei Shemetau
+    </a>
+  </div>
 
-        <div class="nav-right">
+  <div class="nav-right">
     <div class="links">
       <a href="/about">About</a>
       <a href="/experience">Experience</a>
@@ -137,8 +141,7 @@ const canonicalURL = new URL(
       ◐
     </button>
   </div>
-
-      </nav>
+</nav>
     </header>
 
     <main>
