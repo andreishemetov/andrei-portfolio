@@ -923,3 +923,7 @@ footer {
 .page-header:has(+ .about-content) {
   padding-bottom: 40px;
 }
+
+.page-header:has(+ .projects-section) {
+  padding-bottom: 40px;
+}
