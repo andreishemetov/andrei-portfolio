@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getExperience } from '../lib/experience';
+
+const experience = await getExperience();
+
+function formatDate(value: string) {
+  if (!value) return '';
+
+  return new Intl.DateTimeFormat('en', {
+    month: 'short',
+    year: 'numeric',
+  }).format(new Date(value));
+}
+---
+
+<BaseLayout
+  title="Career — Andrei Shemetau"
+  description="Professional career of Andrei Shemetau."
+>
+
+  <section class="page-header">
+    <p class="eyebrow">CAREER</p>
+  </section>
+
+  <section class="timeline">
+
+    {experience.map((item) => (
+
+      <article class="experience-item">
+
+        <div class="experience-period">
+          {formatDate(item.startDate)}
+          {' — '}
+          {item.current
+            ? 'Present'
+            : formatDate(item.endDate)}
+        </div>
+
+        <div class="experience-content">
+
+          <h2>{item.name}</h2>
+
+          <p class="experience-role">
+            {item.role}
+          </p>
+
+          {item.location && (
+            <p class="experience-location">
+              {item.location}
+            </p>
+          )}
+
+        </div>
+
+      </article>
+
+    ))}
+
+  </section>
+
+</BaseLayout>

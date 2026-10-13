@@ -421,7 +421,7 @@ footer {
   letter-spacing: -0.05em;
 }
 
-.page-header > p:last-child {
+.page-header > p:last-child:not(.eyebrow) {
   max-width: 620px;
   margin-top: 28px;
 
