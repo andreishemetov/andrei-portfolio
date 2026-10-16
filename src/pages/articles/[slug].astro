@@ -9,7 +9,7 @@ export async function getStaticPaths() {
   const articles = await getArticles();
 
   return articles
-    .filter((article) => !article.externalUrl)
+    .filter((article) => !article.imageUrl)
     .map((article) => ({
       params: {
         slug: article.slug,
@@ -40,6 +40,9 @@ function formatDate(value: string) {
 <BaseLayout
   title={`${article.name} — Andrei Shemetau`}
   description={article.description}
+  image={article.imageUrl || undefined}
+  type="article"
+  publishedDate={article.publishedDate || undefined}
 >
 
   <article>

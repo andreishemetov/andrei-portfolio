@@ -9,7 +9,7 @@ export interface Article {
   featured: boolean;
   order: number;
   tags: string[];
-  externalUrl: string;
+  imageUrl: string;
 }
 
 export async function getArticles(): Promise<Article[]> {
@@ -45,7 +45,7 @@ export async function getArticles(): Promise<Article[]> {
           props.Tags?.multi_select?.map(
             (item: any) => item.name
           ) ?? [],
-        externalUrl:
+        imageUrl:
           props['External URL']?.url ?? '',
       };
     })

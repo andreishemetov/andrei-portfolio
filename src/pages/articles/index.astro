@@ -29,14 +29,14 @@ function formatDate(value: string) {
     {articles.map((article) => {
 
       const href =
-        article.externalUrl ||
+        article.imageUrl ||
         `/articles/${article.slug}`;
 
       return (
         <a
           class="article-row"
           href={href}
-          target={article.externalUrl ? '_blank' : undefined}
+          target={article.imageUrl ? '_blank' : undefined}
         >
 
           <div class="article-date">
