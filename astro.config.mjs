@@ -11,7 +11,7 @@ export default defineConfig({
   adapter: vercel(),
   integrations: [
   sitemap({
-    filter: (page) => page !== 'https://andreischemetau.dev/blog/',
+    filter: (page) => page !== 'https://andreischemetau.dev/articles/',
   }),
 ]
 });

@@ -16,27 +16,13 @@ function formatDate(value: string) {
 ---
 
 <BaseLayout
-  title="Blog — Andrei Shemetau"
+  title="Articles — Andrei Shemetau"
   description="Articles about mobile engineering, Flutter, architecture and engineering leadership."
 >
 
   <section class="page-header">
-
-    <p class="eyebrow">BLOG</p>
-
-    <h1>
-      Notes on building<br />
-      software.
-    </h1>
-
-    <p>
-      Mobile engineering, Flutter, architecture,
-      developer experience, leadership and AI-assisted
-      software development.
-    </p>
-
+    <p class="eyebrow">ARTICLES</p>
   </section>
-
 
   <section class="articles-list">
 
@@ -44,7 +30,7 @@ function formatDate(value: string) {
 
       const href =
         article.externalUrl ||
-        `/blog/${article.slug}`;
+        `/articles/${article.slug}`;
 
       return (
         <a
