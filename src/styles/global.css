@@ -479,8 +479,6 @@ footer {
 
 /* Articles */
 
-/* Articles */
-
 .articles-list {
   border-top: 1px solid var(--border);
 }
@@ -765,6 +763,11 @@ footer {
 }
 
 /* About page */
+
+.about-content {
+  max-width: 800px;
+  margin: 0;
+}
 
 .about-content .content h2 {
   margin-top: 40px;

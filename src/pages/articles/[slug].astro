@@ -9,16 +9,15 @@ export async function getStaticPaths() {
   const articles = await getArticles();
 
   return articles
-    .filter((article) => !article.imageUrl)
-    .map((article) => ({
-      params: {
-        slug: article.slug,
-      },
-
-      props: {
-        article,
-      },
-    }));
+  .filter((article) => article.slug)
+  .map((article) => ({
+    params: {
+      slug: article.slug,
+    },
+    props: {
+      article,
+    },
+  }));
 }
 
 const { article } = Astro.props;
