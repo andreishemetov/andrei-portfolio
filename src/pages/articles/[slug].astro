@@ -9,22 +9,37 @@ export async function getStaticPaths() {
   const articles = await getArticles();
 
   return articles
-    .filter((article) => !article.externalUrl)
-    .map((article) => ({
-      params: {
-        slug: article.slug,
-      },
-
-      props: {
-        article,
-      },
-    }));
+  .filter((article) => article.slug)
+  .map((article) => ({
+    params: {
+      slug: article.slug,
+    },
+    props: {
+      article,
+    },
+  }));
 }
 
 const { article } = Astro.props;
 
 const blocks = await getPageBlocks(article.id);
 const html = renderBlocks(blocks);
+const articleURL = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
+
+const articleJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: article.name,
+  description: article.description,
+  ...(article.imageUrl && { image: article.imageUrl }),
+  ...(article.publishedDate && { datePublished: article.publishedDate }),
+  mainEntityOfPage: articleURL,
+  author: {
+    '@type': 'Person',
+    name: 'Andrei Shemetau',
+    url: new URL('/', Astro.site ?? Astro.url).href,
+  },
+};
 
 function formatDate(value: string) {
   if (!value) return '';
@@ -40,21 +55,27 @@ function formatDate(value: string) {
 <BaseLayout
   title={`${article.name} — Andrei Shemetau`}
   description={article.description}
+  image={article.imageUrl || undefined}
+  type="article"
+  publishedDate={article.publishedDate || undefined}
+  structuredData={articleJsonLd}
 >
 
   <article>
 
-    <a href="/blog">
-      ← Blog
+    <a href="/articles">
+      ← Articles
     </a>
 
     <header>
 
-      <div class="article-tags">
-        {article.tags.map((tag) => (
-          <span>{tag}</span>
-        ))}
-      </div>
+      {article.tags.length > 0 && (
+  <div class="technology-list">
+    {article.tags.map((tag) => (
+      <span>{tag}</span>
+    ))}
+  </div>
+)}
 
       <h1>{article.name}</h1>
 

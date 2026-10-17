@@ -1,22 +1,34 @@
 ---
 import '../styles/global.css';
+import MobileDrawer from '../components/MobileDrawer.astro';
 
 interface Props {
   title?: string;
   description?: string;
   image?: string;
+  type?: 'website' | 'article';
+  publishedDate?: string;
+  structuredData?: Record<string, unknown>;
 }
 
 const {
-  title = 'Andrei Shemetau — Lead Mobile Software Engineer',
-  description = 'Lead Mobile Software Engineer specializing in Flutter, iOS, architecture and engineering leadership.',
+  title = 'Andrei Shemetau: Software Engineer',
+  description = 'Building mobile products that scale. Leading teams that deliver. Improving engineering systems that last.',
   image = '/og-image.png',
+  type = 'website',
+  publishedDate,
+  structuredData,
 } = Astro.props;
 
 const canonicalURL = new URL(
   Astro.url.pathname,
   Astro.site ?? Astro.url
 );
+const imageURL = new URL(image, Astro.site ?? Astro.url);
+const isDefaultImage = image === '/og-image.png';
+const serializedStructuredData = structuredData
+  ? JSON.stringify(structuredData).replace(/</g, '\\u003c')
+  : undefined;
 ---
 
 <!doctype html>
@@ -42,9 +54,11 @@ const canonicalURL = new URL(
     href={canonicalURL}
   />
 
+  <link rel="sitemap" href="/sitemap-index.xml" />
+
   <meta
     property="og:type"
-    content="website"
+    content={type}
   />
 
   <meta
@@ -57,15 +71,25 @@ const canonicalURL = new URL(
     content={description}
   />
 
-  <meta
-    property="og:url"
-    content={canonicalURL}
-  />
+  <meta property="og:url" content={canonicalURL} />
 
   <meta
     property="og:image"
-    content={new URL(image, canonicalURL)}
+    content={imageURL}
   />
+
+  {isDefaultImage && <meta property="og:image:width" content="1200" />}
+  {isDefaultImage && <meta property="og:image:height" content="630" />}
+  <meta property="og:image:alt" content={`${title} social preview`} />
+  <meta property="og:site_name" content="Andrei Shemetau" />
+  <meta property="og:locale" content="en_US" />
+
+  {type === 'article' && publishedDate && (
+  <meta
+    property="article:published_time"
+    content={publishedDate}
+  />
+)}
 
   <meta
     name="twitter:card"
@@ -84,8 +108,17 @@ const canonicalURL = new URL(
 
   <meta
     name="twitter:image"
-    content={new URL(image, canonicalURL)}
+    content={imageURL}
   />
+
+  <meta name="twitter:image:alt" content={`${title} social preview`} />
+
+  {serializedStructuredData && (
+    <script
+      type="application/ld+json"
+      set:html={serializedStructuredData}
+    />
+  )}
 
   <link
     rel="icon"
@@ -112,18 +145,21 @@ const canonicalURL = new URL(
   <body>
 
     <header class="header">
-      <nav class="nav">
+<nav class="nav" aria-label="Main navigation">
+  <div class="nav-left">
+    <MobileDrawer />
 
-        <a class="logo" href="/">
-          Andrei Shemetau
-        </a>
+    <a class="logo" href="/">
+      Andrei Shemetau
+    </a>
+  </div>
 
-        <div class="nav-right">
+  <div class="nav-right">
     <div class="links">
       <a href="/about">About</a>
-      <a href="/experience">Experience</a>
+      <a href="/career">Career</a>
       <a href="/projects">Projects</a>
-      <a href="/blog">Blog</a>
+      <a href="/articles">Articles</a>
     </div>
 
     <button
@@ -135,8 +171,7 @@ const canonicalURL = new URL(
       ◐
     </button>
   </div>
-
-      </nav>
+</nav>
     </header>
 
     <main>
@@ -148,10 +183,6 @@ const canonicalURL = new URL(
         <p>© {new Date().getFullYear()} Andrei Shemetau</p>
     
         <div class="footer-links">
-          <a href="/cv/andrei-shemetau-cv.pdf" target="_blank">
-            CV
-          </a>
-    
           <a
             href="https://www.linkedin.com/in/andrei-shemetau"
             target="_blank"
@@ -162,6 +193,14 @@ const canonicalURL = new URL(
           <a href="mailto:andrei.shemetov@gmail.com">
             Email
           </a>
+
+          <a
+        href="https://github.com/andreishemetov"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        GitHub
+      </a>
         </div>
       </div>
     </footer>

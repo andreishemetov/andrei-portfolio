@@ -1,60 +1,81 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getFeaturedProjects } from '../lib/projects';
+import { getProfileItems } from '../lib/profile';
+import MyFocus from '../components/MyFocus.astro';
+import ContactCTA from '../components/ContactCTA.astro';
 
-const projects = await getFeaturedProjects();
+const profileItems = await getProfileItems();
+
+const hero = profileItems.find(
+  (item) => item.section === 'Hero'
+);
+
+const heroBlocks = hero?.blocks.filter(
+  (block) => block.text.trim().length > 0
+) ?? [];
+
+const myFocus = profileItems.find(
+  (item) => item.section === 'MyFocus'
+);
+
+const myFocusBlocks = myFocus?.blocks.filter(
+  (block) => block.text.trim().length > 0
+) ?? [];
+
+const cta = profileItems.find(
+  (item) => item.section === 'CTA'
+);
+
+const ctaBlocks = cta?.blocks.filter(
+  (block) => block.text.trim().length > 0
+) ?? [];
+
+const profileJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  mainEntity: {
+    '@type': 'Person',
+    name: 'Andrei Shemetau',
+    url: new URL('/', Astro.site).href,
+    jobTitle: 'Mobile Team Lead & Software Engineer',
+    sameAs: [
+      'https://www.linkedin.com/in/andrei-shemetau',
+    ],
+    knowsAbout: [
+      'Mobile Software Engineering',
+      'Flutter',
+      'iOS Development',
+      'Mobile Architecture',
+      'Engineering Leadership',
+    ],
+  },
+};
+
 ---
 
-<BaseLayout>
+<BaseLayout structuredData={profileJsonLd}>
 
-  <section class="hero">
-
-    <p class="eyebrow">
-      MOBILE SOFTWARE ENGINEER
-    </p>
-
+  <!---------------------------------- HERO ----------------------------------->
+  <section class="hero">  
     <h1>
-      Building mobile products<br />
-      from architecture<br />
-      to production.
+      {heroBlocks[0]?.text}
     </h1>
-
+  
     <p class="hero-description">
-      Lead Mobile Software Engineer with 13+ years of experience
-      building production applications, designing scalable
-      architectures, and leading engineering teams.
+      {heroBlocks[1]?.text}
     </p>
-
-    <div class="hero-actions">
-      <a class="primary-button" href="/projects">
-        Explore my work →
-      </a>
-
-      <a
-  class="secondary-button"
-  href="/cv/andrei-shemetau-cv.pdf"
-  target="_blank"
->
-  Download CV
-</a>
-
-      <a
-        class="secondary-button"
-        href="https://www.linkedin.com/in/andrei-shemetau"
-        target="_blank"
-      >
-        LinkedIn
-      </a>
-      
-    </div>
-
+  
+    <p class="hero-description">
+      {heroBlocks[2]?.text}
+    </p>
+  
   </section>
 
 
   <section class="stats">
 
     <div>
-      <strong>13+</strong>
+      <strong>14+</strong>
       <span>Years in mobile engineering</span>
     </div>
 
@@ -70,47 +91,14 @@ const projects = await getFeaturedProjects();
 
   </section>
 
-
-  <section class="featured">
-
-    <div class="section-heading">
-      <p>SELECTED WORK</p>
-      <h2>Featured Projects</h2>
-    </div>
-
-    <div class="project-grid">
-
-      {projects.map((project) => (
-
-        <a
-          class="project-card"
-          href={`/projects/${project.slug}`}
-        >
-
-          <div class="project-meta">
-            {project.domain}
-          </div>
-
-          <h3>{project.name}</h3>
-
-          <p>{project.role}</p>
-
-          <div class="technology-list">
-            {project.technologies.slice(0, 6).map((technology) => (
-              <span>{technology}</span>
-            ))}
-          </div>
-
-          <div class="project-link">
-            View case study →
-          </div>
-
-        </a>
-
-      ))}
-
-    </div>
-
-  </section>
+  <!---------------------------------- MY FOCUS ----------------------------------->
+  {myFocus && (
+    <MyFocus blocks={myFocusBlocks} />
+  )}
+  
+  <!---------------------------------- CTA ----------------------------------->
+  {cta && (
+    <ContactCTA blocks={ctaBlocks} />
+  )}
 
 </BaseLayout>

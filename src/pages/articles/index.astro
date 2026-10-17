@@ -1,0 +1,85 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getArticles } from '../../lib/articles';
+
+const articles = await getArticles();
+
+function formatDate(value: string) {
+  if (!value) return '';
+
+  return new Intl.DateTimeFormat('en', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  }).format(new Date(value));
+}
+---
+
+<BaseLayout
+  title="Articles — Andrei Shemetau"
+  description="Articles about mobile engineering, Flutter, architecture and engineering leadership."
+>
+
+  <section class="page-header">
+    <h1 class="eyebrow">ARTICLES</h1>
+  </section>
+
+  <section class="articles-list">
+
+    {articles.map((article) => (
+  <a
+    class="article-row"
+    href={`/articles/${article.slug}`}
+  >
+    <div class="article-thumbnail">
+  {article.imageUrl ? (
+    <img
+      src={article.imageUrl}
+      alt=""
+      loading="lazy"
+      decoding="async"
+    />
+  ) : (
+    <div
+      class="article-thumbnail-placeholder"
+      aria-hidden="true"
+    />
+  )}
+</div>
+
+    <div class="article-info">
+      {article.publishedDate && (
+        <time
+          class="article-date"
+          datetime={article.publishedDate}
+        >
+          {formatDate(article.publishedDate)}
+        </time>
+      )}
+
+      <h2>{article.name}</h2>
+
+      {article.description && (
+        <p class="article-description">
+          {article.description}
+        </p>
+      )}
+
+      {article.tags.length > 0 && (
+        <div class="technology-list">
+          {article.tags.map((tag) => (
+            <span>{tag}</span>
+          ))}
+        </div>
+      )}
+    </div>
+
+    <div class="project-arrow" aria-hidden="true">
+      →
+    </div>
+  </a>
+))}
+
+  </section>
+
+</BaseLayout>

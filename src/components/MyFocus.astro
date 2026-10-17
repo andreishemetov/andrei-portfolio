@@ -1,0 +1,71 @@
+---
+import type { ProfileBlock } from '../lib/profile';
+
+interface Props {
+  blocks: ProfileBlock[];
+}
+
+const { blocks } = Astro.props;
+
+const items = blocks
+  .map((block, index) => {
+    if (block.type !== 'heading_3') {
+      return null;
+    }
+
+    const description = blocks
+      .slice(index + 1)
+      .find((item) => item.type === 'paragraph');
+
+    return {
+      title: block.text,
+      description: description?.text ?? '',
+    };
+  })
+  .filter(Boolean);
+---
+
+<section class="what-i-do">  
+
+  <div class="what-i-do-grid">
+    {items.map((item) => (
+      <article class="what-i-do-item">
+        <h3>{item?.title}</h3>
+        <p>{item?.description}</p>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+    .what-i-do {
+      margin-top: 4rem;
+    }
+  
+    .what-i-do-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+  
+    .what-i-do-item h3 {
+      margin: 0 0 1rem;
+      font-size: 1.35rem;
+    }
+  
+    .what-i-do-item p {
+      margin: 0;
+      line-height: 1.7;
+      opacity: 0.75;
+    }
+  
+    @media (min-width: 768px) {
+      .what-i-do-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 3rem;
+      }
+       .what-i-do {
+    margin-top: 3rem;
+  }
+    }
+  </style>

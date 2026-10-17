@@ -1,12 +1,18 @@
 import { Client } from '@notionhq/client';
 
+const notionToken = import.meta.env.NOTION_TOKEN;
+
+if (!notionToken) {
+  throw new Error('NOTION_TOKEN is missing');
+}
+
 export const notion = new Client({
-  auth: import.meta.env.NOTION_TOKEN,
+  auth: notionToken,
 });
 
-export async function getPageBlocks(pageId: string) {
-  const blocks = [];
-  let cursor: string | undefined = undefined;
+export async function getPageBlocks(pageId: string): Promise<any[]> {
+  const blocks: any[] = [];
+  let cursor: string | undefined;
 
   do {
     const response = await notion.blocks.children.list({
@@ -17,10 +23,10 @@ export async function getPageBlocks(pageId: string) {
 
     blocks.push(...response.results);
 
-    cursor = response.has_more
-      ? response.next_cursor ?? undefined
-      : undefined;
-
+    cursor =
+      response.has_more && response.next_cursor
+        ? response.next_cursor
+        : undefined;
   } while (cursor);
 
   return blocks;

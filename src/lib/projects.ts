@@ -51,19 +51,3 @@ export async function getProjects(): Promise<Project[]> {
     })
     .sort((a, b) => a.order - b.order);
 }
-
-export async function getFeaturedProjects() {
-  const projects = await getProjects();
-
-  return projects.filter((project) => project.featured);
-}
-
-export async function getProjectBySlug(
-    slug: string
-  ): Promise<Project | undefined> {
-    const projects = await getProjects();
-  
-    return projects.find(
-      (project) => project.slug === slug
-    );
-  }
