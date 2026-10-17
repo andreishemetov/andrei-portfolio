@@ -30,6 +30,7 @@ jobs:
         run: npm run build
         env:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_PROFILE_ID: ${{ secrets.NOTION_PROFILE_ID }}
           NOTION_PROJECTS_ID: ${{ secrets.NOTION_PROJECTS_ID }}
           NOTION_EXPERIENCE_ID: ${{ secrets.NOTION_EXPERIENCE_ID }}
           NOTION_ARTICLES_ID: ${{ secrets.NOTION_ARTICLES_ID }}
