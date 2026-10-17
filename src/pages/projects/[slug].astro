@@ -23,11 +23,30 @@ const { project } = Astro.props;
 
 const blocks = await getPageBlocks(project.id);
 const html = renderBlocks(blocks);
+
+const projectJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CreativeWork',
+  name: project.name,
+  description: `${project.name} case study by Andrei Shemetau`,
+  url: new URL(Astro.url.pathname, Astro.site ?? Astro.url).href,
+  ...(project.cover && { image: project.cover }),
+  ...(project.technologies.length > 0 && {
+    keywords: project.technologies.join(', '),
+  }),
+  author: {
+    '@type': 'Person',
+    name: 'Andrei Shemetau',
+    url: new URL('/', Astro.site ?? Astro.url).href,
+  },
+};
 ---
 
 <BaseLayout
   title={`${project.name} — Andrei Shemetau`}
   description={`${project.name} case study by Andrei Shemetau`}
+  image={project.cover || undefined}
+  structuredData={projectJsonLd}
 >
 
   <article>

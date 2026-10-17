@@ -53,11 +53,7 @@ const profileJsonLd = {
 
 ---
 
-<BaseLayout>
-  <script
-  type="application/ld+json"
-  set:html={JSON.stringify(profileJsonLd)}
-/>
+<BaseLayout structuredData={profileJsonLd}>
 
   <!---------------------------------- HERO ----------------------------------->
   <section class="hero">  

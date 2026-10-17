@@ -9,9 +9,5 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://andreischemetau.dev',
   adapter: vercel(),
-  integrations: [
-  sitemap({
-    filter: (page) => page !== 'https://andreischemetau.dev/articles/',
-  }),
-]
+  integrations: [sitemap()],
 });

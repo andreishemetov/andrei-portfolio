@@ -341,6 +341,14 @@ footer {
   letter-spacing: -0.05em;
 }
 
+.page-header h1.eyebrow {
+  margin-bottom: 24px;
+
+  font-size: 12px;
+  line-height: normal;
+  letter-spacing: 0.16em;
+}
+
 /* Experience */
 
 .timeline {

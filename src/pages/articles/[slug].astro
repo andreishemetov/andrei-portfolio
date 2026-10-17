@@ -24,6 +24,22 @@ const { article } = Astro.props;
 
 const blocks = await getPageBlocks(article.id);
 const html = renderBlocks(blocks);
+const articleURL = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
+
+const articleJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: article.name,
+  description: article.description,
+  ...(article.imageUrl && { image: article.imageUrl }),
+  ...(article.publishedDate && { datePublished: article.publishedDate }),
+  mainEntityOfPage: articleURL,
+  author: {
+    '@type': 'Person',
+    name: 'Andrei Shemetau',
+    url: new URL('/', Astro.site ?? Astro.url).href,
+  },
+};
 
 function formatDate(value: string) {
   if (!value) return '';
@@ -42,6 +58,7 @@ function formatDate(value: string) {
   image={article.imageUrl || undefined}
   type="article"
   publishedDate={article.publishedDate || undefined}
+  structuredData={articleJsonLd}
 >
 
   <article>
