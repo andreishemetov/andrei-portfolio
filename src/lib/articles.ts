@@ -46,7 +46,7 @@ export async function getArticles(): Promise<Article[]> {
             (item: any) => item.name
           ) ?? [],
         imageUrl:
-          props['External URL']?.url ?? '',
+          props['Image URL']?.url ?? '',
       };
     })
     .sort((a, b) => a.order - b.order);

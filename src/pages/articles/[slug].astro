@@ -53,11 +53,13 @@ function formatDate(value: string) {
 
     <header>
 
-      <div class="article-tags">
-        {article.tags.map((tag) => (
-          <span>{tag}</span>
-        ))}
-      </div>
+      {article.tags.length > 0 && (
+  <div class="technology-list">
+    {article.tags.map((tag) => (
+      <span>{tag}</span>
+    ))}
+  </div>
+)}
 
       <h1>{article.name}</h1>
 

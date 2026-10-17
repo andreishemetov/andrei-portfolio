@@ -26,46 +26,59 @@ function formatDate(value: string) {
 
   <section class="articles-list">
 
-    {articles.map((article) => {
+    {articles.map((article) => (
+  <a
+    class="article-row"
+    href={`/articles/${article.slug}`}
+  >
+    <div class="article-thumbnail">
+  {article.imageUrl ? (
+    <img
+      src={article.imageUrl}
+      alt=""
+      loading="lazy"
+      decoding="async"
+    />
+  ) : (
+    <div
+      class="article-thumbnail-placeholder"
+      aria-hidden="true"
+    />
+  )}
+</div>
 
-      const href =
-        article.imageUrl ||
-        `/articles/${article.slug}`;
-
-      return (
-        <a
-          class="article-row"
-          href={href}
-          target={article.imageUrl ? '_blank' : undefined}
+    <div class="article-info">
+      {article.publishedDate && (
+        <time
+          class="article-date"
+          datetime={article.publishedDate}
         >
+          {formatDate(article.publishedDate)}
+        </time>
+      )}
 
-          <div class="article-date">
-            {formatDate(article.publishedDate)}
-          </div>
+      <h2>{article.name}</h2>
 
-          <div class="article-info">
+      {article.description && (
+        <p class="article-description">
+          {article.description}
+        </p>
+      )}
 
-            <div class="article-tags">
-              {article.tags.map((tag) => (
-                <span>{tag}</span>
-              ))}
-            </div>
+      {article.tags.length > 0 && (
+        <div class="technology-list">
+          {article.tags.map((tag) => (
+            <span>{tag}</span>
+          ))}
+        </div>
+      )}
+    </div>
 
-            <h2>{article.name}</h2>
-
-            {article.description && (
-              <p>{article.description}</p>
-            )}
-
-          </div>
-
-          <div class="project-arrow">
-            →
-          </div>
-
-        </a>
-      );
-    })}
+    <div class="project-arrow" aria-hidden="true">
+      →
+    </div>
+  </a>
+))}
 
   </section>
 
