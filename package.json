@@ -14,13 +14,13 @@
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
-    "@astrojs/vercel": "^11.0.10",
-    "@notionhq/client": "^5.26.0",
-    "astro": "^7.3.3"
+    "@astrojs/vercel": "^11.0.15",
+    "@notionhq/client": "^5.27.1",
+    "astro": "^7.4.0"
   },
   "devDependencies": {
-    "prettier": "^3.9.8",
-    "prettier-plugin-astro": "^1.0.1",
+    "prettier": "^3.9.10",
+    "prettier-plugin-astro": "^1.1.1",
     "typescript": "^7.0.2"
   }
 }
