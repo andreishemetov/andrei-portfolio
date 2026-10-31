@@ -35,8 +35,9 @@ export async function getArticles(): Promise<Article[]> {
         id: page.id,
         name: props.Name?.title?.[0]?.plain_text ?? '',
         slug: props.Slug?.rich_text?.[0]?.plain_text ?? '',
-        description:
-          props.Description?.rich_text?.[0]?.plain_text ?? '',
+        description: props.Description.rich_text
+          .map((item: any) => item.plain_text)
+          .join(''),
         publishedDate:
           props['Published Date']?.date?.start ?? '',
         featured: props.Featured?.checkbox ?? false,
