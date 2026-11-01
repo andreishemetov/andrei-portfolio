@@ -9,14 +9,12 @@
   <span aria-hidden="true">☰</span>
 </button>
 
-<dialog
-  id="mobile-drawer"
-  class="mobile-drawer"
-  aria-label="Mobile navigation"
->
+<dialog id="mobile-drawer" class="mobile-drawer" aria-label="Mobile navigation">
   <div class="drawer-content">
     <div class="drawer-header">
-      <a href="/" class="drawer-logo">Andrei Shemetau</a>
+      <a href="/" class="drawer-logo">
+        Andrei Shemetau
+      </a>
 
       <button
         id="drawer-close"
@@ -45,9 +43,7 @@
         LinkedIn
       </a>
 
-      <a href="mailto:andrei.shemetov@gmail.com">
-            Email
-          </a>
+      <a href="mailto:andrei.shemetov@gmail.com">Email</a>
 
       <a
         href="https://github.com/andreishemetov"
@@ -166,27 +162,28 @@
 </style>
 
 <script>
-  const drawer = document.querySelector<HTMLDialogElement>('#mobile-drawer');
-  const openButton = document.querySelector<HTMLButtonElement>('#drawer-open');
-  const closeButton = document.querySelector<HTMLButtonElement>('#drawer-close');
+  const drawer = document.querySelector<HTMLDialogElement>("#mobile-drawer");
+  const openButton = document.querySelector<HTMLButtonElement>("#drawer-open");
+  const closeButton =
+    document.querySelector<HTMLButtonElement>("#drawer-close");
 
   if (drawer && openButton && closeButton) {
-    const desktopMedia = window.matchMedia('(min-width: 701px)');
+    const desktopMedia = window.matchMedia("(min-width: 701px)");
 
-desktopMedia.addEventListener('change', (event) => {
-  if (event.matches && drawer.open) {
-    drawer.close();
-  }
-});
-    openButton.addEventListener('click', () => {
+    desktopMedia.addEventListener("change", (event) => {
+      if (event.matches && drawer.open) {
+        drawer.close();
+      }
+    });
+    openButton.addEventListener("click", () => {
       drawer.showModal();
     });
 
-    closeButton.addEventListener('click', () => {
+    closeButton.addEventListener("click", () => {
       drawer.close();
     });
 
-    drawer.addEventListener('click', (event) => {
+    drawer.addEventListener("click", (event) => {
       if (event.target === drawer) {
         drawer.close();
       }
