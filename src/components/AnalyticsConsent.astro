@@ -1,0 +1,189 @@
+<div
+  id="analytics-consent"
+  class="analytics-consent"
+  role="region"
+  aria-label="Analytics cookie preferences"
+  hidden
+>
+  <div>
+    <strong>Analytics cookies</strong>
+    <p>
+      I use Google Analytics to understand how this portfolio is used. Analytics
+      stays off unless you accept.
+    </p>
+  </div>
+
+  <div class="analytics-consent__actions">
+    <button type="button" data-consent="denied">
+      Decline
+    </button>
+    <button type="button" class="primary" data-consent="granted">
+      Accept
+    </button>
+  </div>
+</div>
+
+<script is:inline>
+  (() => {
+    const measurementId = "G-1GHYXY3361";
+    const storageKey = "analytics-consent";
+
+    const readChoice = () => {
+      try {
+        return localStorage.getItem(storageKey);
+      } catch {
+        return null;
+      }
+    };
+
+    const saveChoice = (choice) => {
+      try {
+        localStorage.setItem(storageKey, choice);
+      } catch {}
+    };
+
+    window.dataLayer = window.dataLayer || [];
+    window.gtag =
+      window.gtag ||
+      function () {
+        window.dataLayer.push(arguments);
+      };
+
+    window.gtag("consent", "default", {
+      ad_storage: "denied",
+      ad_user_data: "denied",
+      ad_personalization: "denied",
+      analytics_storage: "denied",
+    });
+
+    const loadAnalytics = () => {
+      if (document.getElementById("google-analytics")) return;
+
+      const script = document.createElement("script");
+      script.id = "google-analytics";
+      script.async = true;
+      script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
+      document.head.appendChild(script);
+
+      window.gtag("js", new Date());
+      window.gtag("config", measurementId);
+    };
+
+    const updateConsent = (choice) => {
+      window.gtag("consent", "update", {
+        analytics_storage: choice,
+      });
+
+      if (choice === "granted") loadAnalytics();
+    };
+
+    const banner = document.getElementById("analytics-consent");
+    const savedChoice = readChoice();
+
+    if (savedChoice === "granted" || savedChoice === "denied") {
+      updateConsent(savedChoice);
+    } else if (banner) {
+      banner.hidden = false;
+    }
+
+    banner?.addEventListener("click", (event) => {
+      const button =
+        event.target instanceof Element
+          ? event.target.closest("[data-consent]")
+          : null;
+      if (!button) return;
+
+      const choice = button.dataset.consent;
+      if (choice !== "granted" && choice !== "denied") return;
+
+      saveChoice(choice);
+      updateConsent(choice);
+      banner.hidden = true;
+    });
+
+    document
+      .getElementById("analytics-settings")
+      ?.addEventListener("click", () => {
+        if (banner) {
+          banner.hidden = false;
+          banner.querySelector("button")?.focus();
+        }
+      });
+  })();
+</script>
+
+<style>
+  .analytics-consent {
+    position: fixed;
+    z-index: 1000;
+    right: 24px;
+    bottom: 24px;
+    left: 24px;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--background);
+    box-shadow: 0 12px 40px rgb(0 0 0 / 18%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .analytics-consent[hidden] {
+    display: none;
+  }
+
+  .analytics-consent strong {
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .analytics-consent p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .analytics-consent__actions {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .analytics-consent button {
+    padding: 9px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--text);
+    font: inherit;
+    cursor: pointer;
+  }
+
+  .analytics-consent button.primary {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: var(--background);
+  }
+
+  .analytics-consent button:hover,
+  .analytics-consent button:focus-visible {
+    opacity: 0.75;
+  }
+
+  @media (max-width: 600px) {
+    .analytics-consent {
+      align-items: stretch;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .analytics-consent__actions button {
+      flex: 1;
+    }
+  }
+</style>
