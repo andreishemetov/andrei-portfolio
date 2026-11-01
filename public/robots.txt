@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://andreischemetau.dev/sitemap-index.xml
+Sitemap: https://ashemetau.vercel.app/sitemap-index.xml
