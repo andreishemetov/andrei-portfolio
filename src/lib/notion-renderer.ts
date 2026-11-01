@@ -33,12 +33,16 @@ export function renderRichText(items: any[] = []) {
       }
 
       if (item.href) {
-  const href = safeUrl(item.href);
+        const href = safeUrl(item.href);
 
-  if (href) {
-    text = `<a href="${href}" target="_blank" rel="noopener noreferrer">${text}</a>`;
-  }
-}
+        if (href) {
+          const attributes = href.startsWith('mailto:')
+            ? ''
+            : ' target="_blank" rel="noopener noreferrer"';
+
+          text = `<a href="${href}"${attributes}>${text}</a>`;
+        }
+      }
 
       return text;
     })
@@ -51,7 +55,11 @@ function safeUrl(value: string | null | undefined) {
   try {
     const url = new URL(value);
 
-    if (url.protocol === 'https:' || url.protocol === 'http:') {
+    if (
+      url.protocol === 'https:' ||
+      url.protocol === 'http:' ||
+      url.protocol === 'mailto:'
+    ) {
       return escapeHtml(url.toString());
     }
   } catch {
