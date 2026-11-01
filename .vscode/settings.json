@@ -3,5 +3,5 @@
   "[astro]": {
     "editor.defaultFormatter": "astro-build.astro-vscode"
   },
-  "cSpell.words": ["Shemetau"]
+  "cSpell.words": ["noopener", "noreferrer", "Shemetau"]
 }
