@@ -22,6 +22,13 @@ astro dev --background
 
 Manage the background server with `astro dev stop`, `astro dev status`, and `astro dev logs`.
 
+## Git workflow
+
+- Never commit changes automatically.
+- Never push branches or create pull requests automatically.
+- Leave all changes uncommitted for the user to review.
+- Only commit, push, or create a pull request after an explicit user request.
+
 ## Documentation
 
 Full documentation: https://docs.astro.build

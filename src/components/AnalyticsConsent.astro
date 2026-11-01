@@ -9,7 +9,7 @@
     <strong>Analytics cookies</strong>
     <p>
       I use Google Analytics to understand how this portfolio is used. Analytics
-      stays off unless you accept.
+      stays off unless you accept. <a href="/privacy">Privacy policy</a>.
     </p>
   </div>
 
@@ -40,6 +40,15 @@
       try {
         localStorage.setItem(storageKey, choice);
       } catch {}
+    };
+
+    const clearAnalyticsCookies = () => {
+      document.cookie.split(";").forEach((cookie) => {
+        const name = cookie.split("=")[0]?.trim();
+        if (!name || (name !== "_ga" && !name.startsWith("_ga_"))) return;
+
+        document.cookie = `${name}=; Max-Age=0; path=/; SameSite=Lax`;
+      });
     };
 
     window.dataLayer = window.dataLayer || [];
@@ -75,6 +84,40 @@
       });
 
       if (choice === "granted") loadAnalytics();
+      if (choice === "denied") clearAnalyticsCookies();
+    };
+
+    const getLinkLocation = (link) => {
+      if (link.closest("footer")) return "footer";
+      if (link.closest("dialog")) return "mobile_menu";
+      if (link.closest(".contact-cta")) return "contact_cta";
+      return "page_content";
+    };
+
+    const trackLink = (link) => {
+      if (readChoice() !== "granted" || typeof window.gtag !== "function") {
+        return;
+      }
+
+      const url = new URL(link.href, window.location.href);
+      const linkLocation = getLinkLocation(link);
+
+      const contactMethod =
+        url.protocol === "mailto:"
+          ? "email"
+          : url.hostname.includes("linkedin.com")
+            ? "linkedin"
+            : url.hostname === "github.com" ||
+                url.hostname.endsWith(".github.com")
+              ? "github"
+              : null;
+
+      if (contactMethod) {
+        window.gtag("event", "contact_click", {
+          contact_method: contactMethod,
+          link_location: linkLocation,
+        });
+      }
     };
 
     const banner = document.getElementById("analytics-consent");
@@ -109,6 +152,15 @@
           banner.querySelector("button")?.focus();
         }
       });
+
+    document.addEventListener("click", (event) => {
+      const link =
+        event.target instanceof Element
+          ? event.target.closest("a[href]")
+          : null;
+
+      if (link instanceof HTMLAnchorElement) trackLink(link);
+    });
   })();
 </script>
 
@@ -146,6 +198,11 @@
     color: var(--text-secondary);
     font-size: 14px;
     line-height: 1.5;
+  }
+
+  .analytics-consent a {
+    text-decoration: underline;
+    text-underline-offset: 2px;
   }
 
   .analytics-consent__actions {

@@ -1,0 +1,98 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Privacy Policy | Andrei Shemetau"
+  description="Privacy information for the Andrei Shemetau portfolio website."
+>
+  <article class="legal-page">
+    <header>
+      <p class="eyebrow">PRIVACY</p>
+      <h1>Privacy Policy</h1>
+      <p>Last updated: 1 November 2026</p>
+    </header>
+
+    <div class="content">
+      <h2>Who is responsible for this website</h2>
+      <p>
+        This portfolio is operated by Andrei Shemetau. For privacy questions or
+        requests, contact{" "}
+        <a href="mailto:andrei.shemetov@gmail.com">andrei.shemetov@gmail.com</a>
+        .
+      </p>
+
+      <h2>Google Analytics</h2>
+      <p>
+        With your consent, this website uses Google Analytics 4 to understand
+        how visitors use the site and which content is useful. The legal basis
+        for this processing is your consent. Analytics remains disabled until
+        you select “Accept”.
+      </p>
+      <p>
+        Analytics may process information such as pages viewed, approximate
+        location, device and browser information, traffic source, and
+        interactions such as contact-link clicks. This website does not
+        intentionally send your name, email address, or other form contents to
+        Google Analytics.
+      </p>
+      <p>
+        Google acts as an analytics service provider and may process data
+        outside your country. For details, see{" "}
+        <a
+          href="https://policies.google.com/privacy"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Google’s Privacy Policy
+        </a>
+        .
+      </p>
+
+      <h2>Cookies and storage</h2>
+      <p>
+        If you accept analytics, Google Analytics can set <code>_ga</code> and{" "}
+        <code>_ga_*</code> first-party cookies. Their default lifetime is up to
+        two years and may be renewed when you revisit the site. Your consent
+        choice is stored in your browser under <code>analytics-consent</code> so
+        the site can remember it.
+      </p>
+
+      <h2>Your choice</h2>
+      <p>
+        You can decline analytics without losing access to the website. You can
+        also change or withdraw your choice at any time using “Cookie settings”
+        in the footer. Withdrawing consent disables future analytics collection
+        and removes the Google Analytics cookies accessible to this website.
+      </p>
+
+      <h2>Data retention and your rights</h2>
+      <p>
+        Analytics data is retained according to the retention settings in the
+        Google Analytics property. Depending on your location, you may have
+        rights to access, correct, delete, restrict, or object to processing of
+        personal data, and to lodge a complaint with your local data protection
+        authority. Contact the email address above to exercise a relevant right.
+      </p>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .legal-page {
+    max-width: var(--article-width);
+  }
+
+  .legal-page header {
+    margin-bottom: 48px;
+  }
+
+  .legal-page h1 {
+    font-size: clamp(42px, 7vw, 68px);
+  }
+
+  .legal-page .content a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+</style>

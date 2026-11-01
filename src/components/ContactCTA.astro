@@ -1,5 +1,5 @@
 ---
-import type { ProfileBlock } from '../lib/profile';
+import type { ProfileBlock } from "../lib/profile";
 
 interface Props {
   blocks: ProfileBlock[];
@@ -7,13 +7,10 @@ interface Props {
 
 const { blocks } = Astro.props;
 
-const title = blocks.find(
-  (block) => block.type === 'heading_2'
-)?.text ?? '';
+const title = blocks.find((block) => block.type === "heading_2")?.text ?? "";
 
-const description = blocks.find(
-  (block) => block.type === 'paragraph'
-)?.text ?? '';
+const description =
+  blocks.find((block) => block.type === "paragraph")?.text ?? "";
 ---
 
 <section class="contact-cta">
@@ -32,10 +29,7 @@ const description = blocks.find(
       LinkedIn
     </a>
 
-    <a
-      class="secondary-button"
-      href="mailto:andrei.shemetov@gmail.com"
-    >
+    <a class="secondary-button" href="mailto:andrei.shemetov@gmail.com">
       Email
     </a>
 
@@ -63,10 +57,10 @@ const description = blocks.find(
   }
 
   .contact-content h2 {
-  margin: 0 0 1rem;
-  font-size: clamp(2rem, 5vw, 3rem);
-  line-height: 1.1;
-}
+    margin: 0 0 1rem;
+    font-size: clamp(2rem, 5vw, 3rem);
+    line-height: 1.1;
+  }
 
   .contact-content p {
     margin: 0;
