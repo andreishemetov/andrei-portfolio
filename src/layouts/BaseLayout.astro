@@ -1,33 +1,31 @@
 ---
-import '../styles/global.css';
-import MobileDrawer from '../components/MobileDrawer.astro';
+import "../styles/global.css";
+import MobileDrawer from "../components/MobileDrawer.astro";
+import AnalyticsConsent from "../components/AnalyticsConsent.astro";
 
 interface Props {
   title?: string;
   description?: string;
   image?: string;
-  type?: 'website' | 'article';
+  type?: "website" | "article";
   publishedDate?: string;
   structuredData?: Record<string, unknown>;
 }
 
 const {
-  title = 'Andrei Shemetau: Software Engineer',
-  description = 'Building mobile products that scale. Leading teams that deliver. Improving engineering systems that last.',
-  image = '/og-image.png',
-  type = 'website',
+  title = "Andrei Shemetau: Software Engineer",
+  description = "Building mobile products that scale. Leading teams that deliver. Improving engineering systems that last.",
+  image = "/og-image.png",
+  type = "website",
   publishedDate,
   structuredData,
 } = Astro.props;
 
-const canonicalURL = new URL(
-  Astro.url.pathname,
-  Astro.site ?? Astro.url
-);
+const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? Astro.url);
 const imageURL = new URL(image, Astro.site ?? Astro.url);
-const isDefaultImage = image === '/og-image.png';
+const isDefaultImage = image === "/og-image.png";
 const serializedStructuredData = structuredData
-  ? JSON.stringify(structuredData).replace(/</g, '\\u003c')
+  ? JSON.stringify(structuredData).replace(/</g, "\\u003c")
   : undefined;
 ---
 
@@ -35,148 +33,107 @@ const serializedStructuredData = structuredData
 
 <html lang="en">
   <head>
-  <meta charset="UTF-8" />
+    <meta charset="UTF-8" />
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1"
-  />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <meta
-    name="google-site-verification"
-    content="4NThvqq41m70EU1S1m-kMOgv1JD1LbcsSu-pwhG3nHs"
-  />
-
-  <title>{title}</title>
-
-  <meta
-    name="description"
-    content={description}
-  />
-
-  <link
-    rel="canonical"
-    href={canonicalURL}
-  />
-
-  <link rel="sitemap" href="/sitemap-index.xml" />
-
-  <meta
-    property="og:type"
-    content={type}
-  />
-
-  <meta
-    property="og:title"
-    content={title}
-  />
-
-  <meta
-    property="og:description"
-    content={description}
-  />
-
-  <meta property="og:url" content={canonicalURL} />
-
-  <meta
-    property="og:image"
-    content={imageURL}
-  />
-
-  {isDefaultImage && <meta property="og:image:width" content="1200" />}
-  {isDefaultImage && <meta property="og:image:height" content="630" />}
-  <meta property="og:image:alt" content={`${title} social preview`} />
-  <meta property="og:site_name" content="Andrei Shemetau" />
-  <meta property="og:locale" content="en_US" />
-
-  {type === 'article' && publishedDate && (
-  <meta
-    property="article:published_time"
-    content={publishedDate}
-  />
-)}
-
-  <meta
-    name="twitter:card"
-    content="summary_large_image"
-  />
-
-  <meta
-    name="twitter:title"
-    content={title}
-  />
-
-  <meta
-    name="twitter:description"
-    content={description}
-  />
-
-  <meta
-    name="twitter:image"
-    content={imageURL}
-  />
-
-  <meta name="twitter:image:alt" content={`${title} social preview`} />
-
-  {serializedStructuredData && (
-    <script
-      type="application/ld+json"
-      set:html={serializedStructuredData}
+    <meta
+      name="google-site-verification"
+      content="4NThvqq41m70EU1S1m-kMOgv1JD1LbcsSu-pwhG3nHs"
     />
-  )}
 
-  <link
-    rel="icon"
-    href="/favicon.svg"
-    type="image/svg+xml"
-  />
+    <title>{title}</title>
 
-  <script is:inline>
-    try {
-      const saved = localStorage.getItem('theme');
-  
-      const theme =
-        saved === 'light' || saved === 'dark'
-          ? saved
-          : window.matchMedia('(prefers-color-scheme: dark)').matches
-            ? 'dark'
-            : 'light';
-  
-      document.documentElement.dataset.theme = theme;
-    } catch {}
-  </script>
-</head>
+    <meta name="description" content={description} />
+
+    <link rel="canonical" href={canonicalURL} />
+
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <meta property="og:type" content={type} />
+
+    <meta property="og:title" content={title} />
+
+    <meta property="og:description" content={description} />
+
+    <meta property="og:url" content={canonicalURL} />
+
+    <meta property="og:image" content={imageURL} />
+
+    {isDefaultImage && <meta property="og:image:width" content="1200" />}
+    {isDefaultImage && <meta property="og:image:height" content="630" />}
+    <meta property="og:image:alt" content={`${title} social preview`} />
+    <meta property="og:site_name" content="Andrei Shemetau" />
+    <meta property="og:locale" content="en_US" />
+
+    {type === "article" && publishedDate && (
+      <meta property="article:published_time" content={publishedDate} />
+    )}
+
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <meta name="twitter:title" content={title} />
+
+    <meta name="twitter:description" content={description} />
+
+    <meta name="twitter:image" content={imageURL} />
+
+    <meta name="twitter:image:alt" content={`${title} social preview`} />
+
+    {serializedStructuredData && (
+      <script
+        type="application/ld+json"
+        set:html={serializedStructuredData}
+      ></script>
+    )}
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <script is:inline>
+      try {
+        const saved = localStorage.getItem("theme");
+
+        const theme =
+          saved === "light" || saved === "dark"
+            ? saved
+            : window.matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light";
+
+        document.documentElement.dataset.theme = theme;
+      } catch {}
+    </script>
+  </head>
 
   <body>
-
     <header class="header">
-<nav class="nav" aria-label="Main navigation">
-  <div class="nav-left">
-    <MobileDrawer />
+      <nav class="nav" aria-label="Main navigation">
+        <div class="nav-left">
+          <MobileDrawer />
 
-    <a class="logo" href="/">
-      Andrei Shemetau
-    </a>
-  </div>
+          <a class="logo" href="/">
+            Andrei Shemetau
+          </a>
+        </div>
 
-  <div class="nav-right">
-    <div class="links">
-      <a href="/about">About</a>
-      <a href="/career">Career</a>
-      <a href="/projects">Projects</a>
-      <a href="/articles">Articles</a>
-    </div>
+        <div class="nav-right">
+          <div class="links">
+            <a href="/about">About</a>
+            <a href="/career">Career</a>
+            <a href="/projects">Projects</a>
+            <a href="/articles">Articles</a>
+          </div>
 
-    <button
-      id="theme-toggle"
-      class="theme-toggle"
-      type="button"
-      aria-label="Toggle theme"
-    >
-      ◐
-    </button>
-  </div>
-</nav>
+          <button
+            id="theme-toggle"
+            class="theme-toggle"
+            type="button"
+            aria-label="Toggle theme"
+          >
+            ◐
+          </button>
+        </div>
+      </nav>
     </header>
 
     <main>
@@ -186,65 +143,69 @@ const serializedStructuredData = structuredData
     <footer>
       <div class="footer-content">
         <p>© {new Date().getFullYear()} Andrei Shemetau</p>
-    
+
         <div class="footer-links">
-          <a
-            href="https://www.linkedin.com/in/andrei-shemetau"
-            target="_blank"
-          >
+          <a href="https://www.linkedin.com/in/andrei-shemetau" target="_blank">
             LinkedIn
           </a>
-    
-          <a href="mailto:andrei.shemetov@gmail.com">
-            Email
-          </a>
+
+          <a href="mailto:andrei.shemetov@gmail.com">Email</a>
 
           <a
-        href="https://github.com/andreishemetov"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        GitHub
-      </a>
+            href="https://github.com/andreishemetov"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub
+          </a>
+
+          <button
+            id="analytics-settings"
+            class="footer-link-button"
+            type="button"
+          >
+            Cookie settings
+          </button>
         </div>
       </div>
     </footer>
 
+    <AnalyticsConsent />
+
     <script is:inline>
       const getTheme = () => {
-        const saved = localStorage.getItem('theme');
-    
-        if (saved === 'light' || saved === 'dark') {
+        const saved = localStorage.getItem("theme");
+
+        if (saved === "light" || saved === "dark") {
           return saved;
         }
-    
-        return window.matchMedia('(prefers-color-scheme: dark)').matches
-          ? 'dark'
-          : 'light';
+
+        return window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light";
       };
-    
+
       const applyTheme = (theme) => {
         document.documentElement.dataset.theme = theme;
       };
-    
+
       applyTheme(getTheme());
-    
-      document.addEventListener('DOMContentLoaded', () => {
-        const button = document.getElementById('theme-toggle');
-    
-        button?.addEventListener('click', () => {
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const button = document.getElementById("theme-toggle");
+
+        button?.addEventListener("click", () => {
           const current =
-            document.documentElement.dataset.theme === 'dark'
-              ? 'dark'
-              : 'light';
-    
-          const next = current === 'dark' ? 'light' : 'dark';
-    
-          localStorage.setItem('theme', next);
+            document.documentElement.dataset.theme === "dark"
+              ? "dark"
+              : "light";
+
+          const next = current === "dark" ? "light" : "dark";
+
+          localStorage.setItem("theme", next);
           applyTheme(next);
         });
       });
     </script>
-
   </body>
 </html>
