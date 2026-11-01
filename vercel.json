@@ -5,6 +5,11 @@
       "source": "/experience",
       "destination": "/career",
       "statusCode": 301
+    },
+    {
+      "source": "/experience/",
+      "destination": "/career",
+      "statusCode": 301
     }
   ]
 }
