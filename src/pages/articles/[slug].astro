@@ -93,6 +93,15 @@ function formatDate(value: string) {
 
     </header>
 
+    {article.imageUrl && (
+      <img
+        class="article-hero-image"
+        src={article.imageUrl}
+        alt=""
+        decoding="async"
+      />
+    )}
+
     <div
       class="content"
       set:html={html}

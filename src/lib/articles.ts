@@ -10,6 +10,7 @@ export interface Article {
   order: number;
   tags: string[];
   imageUrl: string;
+  thumbUrl: string;
 }
 
 export async function getArticles(): Promise<Article[]> {
@@ -48,6 +49,8 @@ export async function getArticles(): Promise<Article[]> {
           ) ?? [],
         imageUrl:
           props['Image URL']?.url ?? '',
+        thumbUrl:
+          props['Thumb URL']?.url ?? '',
       };
     })
     .sort((a, b) => a.order - b.order);
