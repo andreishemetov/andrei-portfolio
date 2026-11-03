@@ -28,24 +28,22 @@ function formatDate(value: string) {
 
     {articles.map((article) => (
   <a
-    class="article-row"
+    class:list={[
+      'article-row',
+      { 'article-row-with-thumbnail': article.thumbUrl },
+    ]}
     href={`/articles/${article.slug}`}
   >
-    <div class="article-thumbnail">
-  {article.imageUrl ? (
-    <img
-      src={article.imageUrl}
-      alt=""
-      loading="lazy"
-      decoding="async"
-    />
-  ) : (
-    <div
-      class="article-thumbnail-placeholder"
-      aria-hidden="true"
-    />
-  )}
-</div>
+    {article.thumbUrl && (
+      <div class="article-thumbnail">
+        <img
+          src={article.thumbUrl}
+          alt=""
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    )}
 
     <div class="article-info">
       {article.publishedDate && (
