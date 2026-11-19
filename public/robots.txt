@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ashemetau.vercel.app/sitemap-index.xml
+Sitemap: https://www.shemetau.eu/sitemap-index.xml
