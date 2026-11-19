@@ -9,7 +9,7 @@
           "value": "ashemetau.vercel.app"
         }
       ],
-      "destination": "https://shemetau.eu",
+      "destination": "https://www.shemetau.eu",
       "permanent": true
     },
     {
@@ -20,7 +20,7 @@
           "value": "ashemetau.vercel.app"
         }
       ],
-      "destination": "https://shemetau.eu/:path*",
+      "destination": "https://www.shemetau.eu/:path*",
       "permanent": true
     },
     {
