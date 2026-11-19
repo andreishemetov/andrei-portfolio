@@ -2,6 +2,17 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "redirects": [
     {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "ashemetau.vercel.app"
+        }
+      ],
+      "destination": "https://shemetau.eu/:path*",
+      "permanent": true
+    },
+    {
       "source": "/experience",
       "destination": "/career",
       "statusCode": 301
