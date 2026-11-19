@@ -7,7 +7,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://ashemetau.vercel.app',
+  site: 'https://www.shemetau.eu',
   adapter: vercel(),
   integrations: [sitemap()],
 });
